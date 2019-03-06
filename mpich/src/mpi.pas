@@ -1,6 +1,6 @@
 {$mode objfpc}{$h+}
 {$packrecords c}
-unit mpich;
+unit mpi;
 
 interface
 
