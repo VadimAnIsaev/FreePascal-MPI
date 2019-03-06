@@ -1,4 +1,4 @@
-Uses mpich;
+Uses mpi;
 
 Var
     rank: integer;
