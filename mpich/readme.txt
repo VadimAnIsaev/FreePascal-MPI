@@ -1,1 +1,1 @@
-Headers for FreePascal on OperMPI. 
+Headers for FreePascal on MPICH. 
