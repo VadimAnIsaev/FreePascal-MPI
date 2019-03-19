@@ -19,4 +19,6 @@ Const
 
 implementation
 
+{$I mpich_mpi_func_impl.inc}  
+
 end.

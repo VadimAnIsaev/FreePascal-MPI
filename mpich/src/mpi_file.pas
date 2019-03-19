@@ -35,16 +35,6 @@ Type
  ADIO_Request = TMPI_Request;
  PADIO_Request = ^TMPI_Request;
  
-{ ADIOI_RequestD = packed record
-   cookie: integer;
-   handle: Pointer;
-   optype: integer;
-   fd: PADIO_File;
-   datatype: TMPI_Datatype;
-   queued: integer;
-   nbytes: integer;
-   ptr_in_async_list: PADIOI_Async;
- end;}
  ADIOI_RequestD = TMPI_Request;		// ????
  PMPIO_Request = ^ADIOI_RequestD;
 
@@ -205,6 +195,12 @@ Type
     is_external32            : integer;     
  end;
 
+  MPI_File_errhandler_function	= procedure( p1: PMPI_File; p2: Pinteger; args: array of const );
+  PMPI_File_errhandler_function	= MPI_File_errhandler_function;
+  MPI_File_errhandler_fn	= MPI_File_errhandler_function;
+  PMPI_File_errhandler_fn	= MPI_File_errhandler_fn;  
+
+  
   function MPI_File_call_errhandler(fh: PMPI_File; errorcode: integer): integer; cdecl; external LIBMPI name 'MPI_File_call_errhandler';
   function MPI_File_close(fh: PMPI_File): integer; cdecl; external LIBMPI name 'MPI_File_close';
   function MPI_File_create_errhandler(file_errhandler_fn: PMPI_File_errhandler_function; errhandler: PMPI_Errhandler): integer; cdecl; external LIBMPI name 'MPI_File_create_errhandler';

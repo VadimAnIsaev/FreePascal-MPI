@@ -80,8 +80,6 @@ Type
   PMPI_Handler_function		= MPI_Handler_function;
   MPI_Comm_errhandler_function	= procedure( p1: Pinteger; p2: Pinteger; args: array of const );
   PMPI_Comm_errhandler_function	= MPI_Comm_errhandler_function;
-  MPI_File_errhandler_function	= procedure( p1: PMPI_File; p2: Pinteger; args: array of const );
-  PMPI_File_errhandler_function	= MPI_File_errhandler_function;
   MPI_Win_errhandler_function	= procedure( p1: Pinteger; p2: Pinteger; args: array of const);
   PMPI_Win_errhandler_function	= MPI_Win_errhandler_function;
   MPI_User_function		= procedure( p1: Pointer; p2: Pointer; p3: Pinteger; p4: Pinteger ); 
@@ -115,9 +113,7 @@ Type
   PMPI_Datarep_extent_function		= MPI_Datarep_extent_function;
 
   MPI_Comm_errhandler_fn	= MPI_Comm_errhandler_function;
-  TMPI_Comm_errhandler_fn	= MPI_Comm_errhandler_fn;
-  MPI_File_errhandler_fn	= MPI_File_errhandler_function;
-  TMPI_File_errhandler_fn	= MPI_File_errhandler_fn;
+  PMPI_Comm_errhandler_fn	= MPI_Comm_errhandler_fn;
   MPI_Win_errhandler_fn		= MPI_Win_errhandler_function;
-  TMPI_Win_errhandler_fn	= MPI_Win_errhandler_fn;
+  PMPI_Win_errhandler_fn	= MPI_Win_errhandler_fn;
 
