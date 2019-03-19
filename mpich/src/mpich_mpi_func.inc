@@ -305,3 +305,25 @@ function MPI_Type_size_x(datatype: TMPI_Datatype; size: PMPI_Count): integer; cd
 function MPI_Comm_create_group(comm: TMPI_Comm; group: TMPI_Group; tag: integer; newcomm: PMPI_Comm): integer; cdecl; external LIBMPI name 'MPI_Comm_create_group';
 function MPI_Aint_add(base: TMPI_Aint; disp: TMPI_Aint): TMPI_Aint; cdecl; external LIBMPI name 'MPI_Aint_add';
 function MPI_Aint_diff(addr1: TMPI_Aint; addr2: TMPI_Aint): TMPI_Aint; cdecl; external LIBMPI name 'MPI_Aint_diff';
+
+
+function MPI_Comm_c2f(comm: TMPI_Comm): TMPI_Fint;
+function MPI_Comm_f2c(comm: TMPI_Fint): TMPI_Comm;
+function MPI_Type_c2f(datatype: TMPI_Datatype): TMPI_Fint;
+function MPI_Type_f2c(datatype: TMPI_Fint): TMPI_Datatype;
+function MPI_Group_c2f(group: TMPI_Group): TMPI_Fint;
+function MPI_Group_f2c(group: TMPI_Fint): TMPI_Group;
+function MPI_Info_c2f(info: TMPI_Info): TMPI_Fint;
+function MPI_Info_f2c(info: TMPI_Fint): TMPI_Info;
+function MPI_Request_f2c(request: TMPI_Fint): TMPI_Request;
+function MPI_Request_c2f(request: TMPI_Request): TMPI_Fint;
+function MPI_Op_c2f(op: TMPI_Op): TMPI_Fint;
+function MPI_Op_f2c(op: TMPI_Fint): TMPI_Op;
+function MPI_Errhandler_c2f(errhandler: TMPI_Errhandler): TMPI_Fint;
+function MPI_Errhandler_f2c(errhandler: TMPI_Fint): TMPI_Errhandler;
+function MPI_Win_c2f(win: TMPI_Win): TMPI_Fint;
+function MPI_Win_f2c(win: TMPI_Fint): TMPI_Win;
+function MPI_Message_c2f(msg: TMPI_Message): TMPI_Fint;
+function MPI_Message_f2c(msg: TMPI_Fint): TMPI_Message;
+
+
