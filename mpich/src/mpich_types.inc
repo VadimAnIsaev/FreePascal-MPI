@@ -54,28 +54,7 @@ Type
   TArrMPI_Info = array of TMPI_Info;
   TArrMPI_Request = array of TMPI_Request;
   TArrMPI_Status = array of TMPI_Status;
-
   
-  MPIR_Win_flavor = (MPI_WIN_FLAVOR_CREATE	= 1,
-                     MPI_WIN_FLAVOR_ALLOCATE	= 2,
-                     MPI_WIN_FLAVOR_DYNAMIC	= 3,
-                     MPI_WIN_FLAVOR_SHARED	= 4);
-  MPIR_Win_flavor_t = MPIR_Win_flavor;
-  TMPIR_Win_flavor  = MPIR_Win_flavor;
-  TMPIR_Win_flavor_t = MPIR_Win_flavor;
-  
- 
-  MPIR_Win_model = (MPI_WIN_SEPARATE = 1,
-                    MPI_WIN_UNIFIED  = 2);
-  TMPIR_Win_model= MPIR_Win_model;
-  MPIR_Win_model_t = TMPIR_Win_model;
-  TMPIR_Win_model_t = TMPIR_Win_model;
- 
-  MPIR_Topo_type = ( MPI_GRAPH      = 1, 
-                     MPI_CART       = 2, 
-                     MPI_DIST_GRAPH = 3);  
-  TMPIR_Topo_type = MPIR_Topo_type;
-
   MPI_Handler_function		= procedure( p1: Pinteger; p2: Pinteger; args: array of const );
   PMPI_Handler_function		= MPI_Handler_function;
   MPI_Comm_errhandler_function	= procedure( p1: Pinteger; p2: Pinteger; args: array of const );
