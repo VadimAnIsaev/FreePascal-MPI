@@ -108,6 +108,12 @@
   MPI_T_cvar_handle	= MPIR_T_cvar_handle_s;
   PMPI_T_cvar_handle	= ^MPI_T_cvar_handle;
 
+Const
+  MPI_T_ENUM_NULL		= PMPI_T_enum(NIL);
+  MPI_T_CVAR_HANDLE_NULL	= PMPI_T_cvar_handle(NIL);
+  MPI_T_PVAR_HANDLE_NULL	= PMPI_T_pvar_handle(NIL);
+  MPI_T_PVAR_SESSION_NULL	= PMPI_T_pvar_session(NIL);
+
 
   function MPI_T_init_thread(required: integer; provided: Pinteger): integer; cdecl; external LIBMPI name 'MPI_T_init_thread';
   function MPI_T_finalize(): integer; cdecl; external LIBMPI name 'MPI_T_finalize';
