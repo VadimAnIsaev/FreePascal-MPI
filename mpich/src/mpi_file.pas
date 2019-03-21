@@ -1,3 +1,22 @@
+{*********************************************
+ Headers of MPI (library MPICH) for FreePascal.
+ Types, constants and functions for file operations.
+  
+ Copyright (C) 2019 by Vadim Isaev.
+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ *********************************************}
+{$mode objfpc}{$h+}
+{$packrecords c}
 Unit mpi_file;
 
 interface
@@ -23,34 +42,34 @@ Const
   MPI_FILE_NULL			= PMPI_File(NIL);
 
 Type
- ADIO_Offset = valsint;
- TADIO_Offset = ADIO_Offset;
- PADIO_Offset = ^ADIO_Offset;
+  ADIO_Offset = valsint;
+  TADIO_Offset = ADIO_Offset;
+  PADIO_Offset = ^ADIO_Offset;
 
- PADIOI_Fns = ^ADIOI_Fns_struct;
- PADIO_File = ^ADIOI_FileD;
+  PADIOI_Fns = ^ADIOI_Fns_struct;
+  PADIO_File = ^ADIOI_FileD;
 
- ADIO_Status = TMPI_Status;
- PADIO_Status = ^TMPI_Status;
- ADIO_Request = TMPI_Request;
- PADIO_Request = ^TMPI_Request;
+  ADIO_Status = TMPI_Status;
+  PADIO_Status = ^TMPI_Status;
+  ADIO_Request = TMPI_Request;
+  PADIO_Request = ^TMPI_Request;
  
- ADIOI_RequestD = TMPI_Request;		// ????
- PMPIO_Request = ^ADIOI_RequestD;
+  ADIOI_RequestD = TMPI_Request;		// ????
+  PMPIO_Request = ^ADIOI_RequestD;
 
- ADIO_Fcntl_t = packed record
-    disp: TADIO_Offset;
-    etype: TMPI_Datatype;
-    filetype: TMPI_Datatype;
-    info: TMPI_Info;
-    atomicity: integer;
-    fsize: TADIO_Offset;       
-    diskspace: TADIO_Offset;   
- end;              
- TADIO_Fcntl_t = ADIO_Fcntl_t;
- PADIO_Fcntl_t = ^TADIO_Fcntl_t;
+  ADIO_Fcntl_t = packed record
+    disp	: TADIO_Offset;
+    etype	: TMPI_Datatype;
+    filetype	: TMPI_Datatype;
+    info	: TMPI_Info;
+    atomicity	: integer;
+    fsize	: TADIO_Offset;       
+    diskspace	: TADIO_Offset;   
+  end;              
+  TADIO_Fcntl_t = ADIO_Fcntl_t;
+  PADIO_Fcntl_t = ^TADIO_Fcntl_t;
  
- ADIOI_Fns_struct = packed record
+  ADIOI_Fns_struct = packed record
     ADIOI_xxx_Open:  procedure(fd: PADIO_File; error_code: Pinteger);
     ADIOI_xxx_OpenColl: procedure(fd: PADIO_File; rank: integer; access_mode: integer; error_code: Pinteger);
     ADIOI_xxx_ReadContig: procedure(fd: PADIO_File; buf: Pointer; count: integer; datatype: TMPI_Datatype; file_ptr_type: integer; offset: TADIO_Offset; status: PADIO_Status; error_code: Pinteger);
@@ -78,15 +97,15 @@ Type
     fsname: PChar;
     ADIOI_xxx_IreadStridedColl: procedure(fd: PADIO_File; buf: Pointer; count: integer; datatype: TMPI_Datatype; file_ptr_type: integer; offset: TADIO_Offset; request: PADIO_Request; error_code: Pinteger);
     ADIOI_xxx_IwriteStridedColl: procedure(fd: PADIO_File; const buf: Pointer; count: integer; datatype: TMPI_Datatype; file_ptr_type: integer; offset: TADIO_Offset; request: PADIO_Request; error_code: Pinteger);
- end;
- ADIOI_Fns = ADIOI_Fns_struct;
- TADIOI_Fns = ADIOI_Fns_struct;
+  end;
+  ADIOI_Fns = ADIOI_Fns_struct;
+  TADIOI_Fns = ADIOI_Fns_struct;
 
- Tpvfs = packed record
+  Tpvfs = packed record
 	listio_read : integer;
 	listio_write: integer;
- end ;
- Tpvfs2 = packed record
+  end ;
+  Tpvfs2 = packed record
 	debugmask   : integer;
 	posix_read  : integer;
 	posix_write : integer;
@@ -94,33 +113,33 @@ Type
 	listio_write: integer;
 	dtype_read  : integer;
 	dtype_write : integer;
- end ;
- Tlustre = packed record
+  end ;
+  Tlustre = packed record
         start_iodevice: integer;
         co_ratio      : integer;
         coll_threshold: integer;
         ds_in_coll    : integer;
- end ;
- Txfs = packed record
+  end ;
+  Txfs = packed record
 	read_chunk_sz : longword; 
 	write_chunk_sz: longword; 
- end ;
- Tbg = packed record
+  end ;
+  Tbg = packed record
       bridgelist   : Pinteger; 
       bridgelistnum: Pinteger; 
       numbridges   : integer; 
- end;
+  end;
 
- Tfs_hints = packed record
-   Case Byte Of
+  Tfs_hints = packed record
+    Case Byte Of
      0: (pvfs: Tpvfs);
      1: (pvfs2: Tpvfs2);
      2: (lustre: Tlustre);
      3: (xfs: Txfs);
      4: (bg: Tbg);
- end;
+  end;
 
- ADIOI_Hints_struct = packed record
+  ADIOI_Hints_struct = packed record
     initialized		: integer;
     striping_factor	: integer;
     striping_unit	: integer;
@@ -143,12 +162,12 @@ Type
     cb_config_list	: PChar;
     ranklist		: Pinteger;
     fs_hints		: Tfs_hints;
- end;
- ADIOI_Hints = ADIOI_Hints_struct;
- PADIOI_Hints = ^ADIOI_Hints;
+  end;
+  ADIOI_Hints = ADIOI_Hints_struct;
+  PADIOI_Hints = ^ADIOI_Hints;
 
- PADIOI_FileD = ADIOI_FileD;
- ADIOI_FileD = packed record
+  PADIOI_FileD = ADIOI_FileD;
+  ADIOI_FileD = packed record
     cookie                   : integer;     
     fd_sys                   : integer;     
     null_fd                  : integer;     
@@ -193,7 +212,7 @@ Type
     io_buf_put_amounts       : Pinteger;    
     io_buf_put_amounts_window: integer;     
     is_external32            : integer;     
- end;
+  end;
 
   MPI_File_errhandler_function	= procedure( p1: PMPI_File; p2: Pinteger; args: array of const );
   PMPI_File_errhandler_function	= MPI_File_errhandler_function;

@@ -1,3 +1,22 @@
+{*********************************************
+ Headers of MPI (library MPICH) for FreePascal.
+ General functions include file. Main module - mpi.pas.
+  
+ Copyright (C) 2019 by Vadim Isaev.
+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ *********************************************}
+
+
 // function 
 function MPI_Send(const buf: Pointer; count: integer; datatype: TMPI_Datatype; dest: integer; tag: integer; comm: TMPI_Comm): integer; cdecl; external LIBMPI name 'MPI_Send';
 function MPI_Recv(buf: Pointer; count: integer; datatype: TMPI_Datatype; source: integer; tag: integer; comm: TMPI_Comm; status: PMPI_Status): integer; cdecl; external LIBMPI name 'MPI_Recv';

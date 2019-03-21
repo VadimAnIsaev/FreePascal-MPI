@@ -1,3 +1,21 @@
+{*********************************************
+ Headers of MPI (library MPICH) for FreePascal.
+ Constants module.
+  
+ Copyright (C) 2019 by Vadim Isaev.
+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ *********************************************}
+
 Const
 
    NO_TAGS_WITH_MODIFIERS = 1;
@@ -119,8 +137,6 @@ Const
 
 { RMA and Windows }
    MPI_WIN_NULL    = TMPI_Win($20000000);
-
-   MPI_FILE_NULL = TMPI_File(0);
 
 { Collective operations }
    MPI_MAX       = TMPI_Op($58000001);
