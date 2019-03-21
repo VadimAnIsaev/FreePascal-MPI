@@ -1,3 +1,4 @@
+// function 
 function MPI_Send(const buf: Pointer; count: integer; datatype: TMPI_Datatype; dest: integer; tag: integer; comm: TMPI_Comm): integer; cdecl; external LIBMPI name 'MPI_Send';
 function MPI_Recv(buf: Pointer; count: integer; datatype: TMPI_Datatype; source: integer; tag: integer; comm: TMPI_Comm; status: PMPI_Status): integer; cdecl; external LIBMPI name 'MPI_Recv';
 function MPI_Get_count(const status: PMPI_Status; datatype: TMPI_Datatype; count: Pinteger): integer; cdecl; external LIBMPI name 'MPI_Get_count';
@@ -306,7 +307,7 @@ function MPI_Comm_create_group(comm: TMPI_Comm; group: TMPI_Group; tag: integer;
 function MPI_Aint_add(base: TMPI_Aint; disp: TMPI_Aint): TMPI_Aint; cdecl; external LIBMPI name 'MPI_Aint_add';
 function MPI_Aint_diff(addr1: TMPI_Aint; addr2: TMPI_Aint): TMPI_Aint; cdecl; external LIBMPI name 'MPI_Aint_diff';
 
-
+// function-macroc in "mpi.h"
 function MPI_Comm_c2f(comm: TMPI_Comm): TMPI_Fint;
 function MPI_Comm_f2c(comm: TMPI_Fint): TMPI_Comm;
 function MPI_Type_c2f(datatype: TMPI_Datatype): TMPI_Fint;
