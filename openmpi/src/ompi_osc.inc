@@ -1,3 +1,5 @@
+  Pompi_osc_base_module_t = ^ompi_osc_base_module_t;
+
   ompi_osc_base_module_win_shared_query_fn_t= function(win: Pompi_win_t; rank: integer; size: Pvaluint; disp_unit: Pinteger; baseptr: Pointer): integer;
   ompi_osc_base_module_win_attach_fn_t= function(win: Pompi_win_t; base: Pointer; size: valuint): integer;
   ompi_osc_base_module_win_detach_fn_t= function(win: Pompi_win_t; const base: Pointer): integer;

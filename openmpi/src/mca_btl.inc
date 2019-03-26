@@ -1,9 +1,69 @@
   Pmca_btl_base_module_t = ^mca_btl_base_module_t;
-
+  Pmca_btl_base_endpoint_t = ^mca_btl_base_endpoint_t;
+  Pmca_btl_openib_module_t = ^mca_btl_openib_module_t;
+  Pmca_btl_openib_proc_t = ^mca_btl_openib_proc_t;
+  Pmca_btl_openib_proc_modex_t = ^mca_btl_openib_proc_modex_t;
+  Pmca_btl_base_descriptor_t = ^mca_btl_base_descriptor_t;
+  
+  mca_btl_base_atomic_op_t = (
+    MCA_BTL_ATOMIC_ADD	= $0001,
+    MCA_BTL_ATOMIC_AND	= $0011,
+    MCA_BTL_ATOMIC_OR	= $0012,
+    MCA_BTL_ATOMIC_XOR	= $0014,
+    MCA_BTL_ATOMIC_LAND	= $0015,
+    MCA_BTL_ATOMIC_LOR	= $0016,
+    MCA_BTL_ATOMIC_LXOR	= $0017,
+    MCA_BTL_ATOMIC_SWAP	= $001a,
+    MCA_BTL_ATOMIC_MIN	= $0020,
+    MCA_BTL_ATOMIC_MAX	= $0021,
+    MCA_BTL_ATOMIC_LAST);
+  
+  
+  mca_btl_base_endpoint_t = packed record
+    super			: opal_list_item_t;
+    endpoint_btl		: Pmca_btl_openib_module_t;
+    endpoint_proc		: Pmca_btl_openib_proc_t;
+    endpoint_local_cpc		: Popal_btl_openib_connect_base_module_t;
+    endpoint_local_cpc_data	: Pointer;
+    endpoint_initiator		: longbool;
+    endpoint_remote_cpc_data	: Popal_btl_openib_connect_base_module_data_t;
+    endpoint_state		: mca_btl_openib_endpoint_state_t;
+    endpoint_retries		: valuint;
+    endpoint_tstamp		: double;
+    endpoint_lock		: opal_mutex_t;
+    pending_lazy_frags		: opal_list_t;
+    qps				: Pmca_btl_openib_endpoint_qp_t;
+{$if defined(OPAL_HAVE_CONNECTX_XRC_DOMAINS)}
+    xrc_recv_qp			: Pibv_qp;
+{$else}
+    xrc_recv_qp_num		: DWord;
+{$endif}
+    xrc_recv_psn		: DWord;
+    pending_get_frags		: opal_list_t;
+    pending_put_frags		: opal_list_t;
+    get_tokens			: integer;
+    subnet_id			: QWord;
+    ib_addr			: Pib_address_t;
+    eager_recv_count		: integer;
+    eager_rdma_remote		: mca_btl_openib_eager_rdma_remote_t;
+    eager_rdma_local		: mca_btl_openib_eager_rdma_local_t;
+    index			: integer;
+    nbo				: longbool;
+    use_eager_rdma		: longbool;
+    rem_info			: mca_btl_openib_rem_info_t;
+    endpoint_cts_frag		: mca_btl_openib_recv_frag_t;
+    endpoint_cts_mr		: Pibv_mr;
+    endpoint_posted_recvs	: longbool;
+    endpoint_cts_received	: longbool;
+    endpoint_cts_sent		: longbool;
+  end;
+  
+  
   mca_btl_base_registration_handle_t = packed record
   end;
 
-  mca_btl_base_module_flush_fn_t= function(btl: Pmca_btl_base_module_t; endpoint: Pmca_btl_base_endpoint_t): integer;
+  mca_btl_base_module_error_cb_fn_t = procedure(btl: Pmca_btl_base_module_t; flags: integer; errproc: Popal_proc_t; btlinfo: PChar);
+  
   mca_btl_base_module_add_procs_fn_t= function(btl: Pmca_btl_base_module_t; nprocs: valuint; procs: Popal_proc_t; endpoints: Pmca_btl_base_endpoint_t; reachable: Popal_bitmap_t): integer;
   mca_btl_base_module_del_procs_fn_t= function(btl: Pmca_btl_base_module_t; nprocs: valuint; procs: Popal_proc_t; peer: Pmca_btl_base_endpoint_t): integer;
   mca_btl_base_module_register_fn_t= function(btl: Pmca_btl_base_module_t; tag: mca_btl_base_tag_t; cbfunc: mca_btl_base_module_recv_cb_fn_t; cbdata: Pointer): integer;
@@ -21,15 +81,10 @@
   mca_btl_base_module_atomic_cswap64_fn_t= function(btl: Pmca_btl_base_module_t; endpoint: Pmca_btl_base_endpoint_t; local_address: Pointer; remote_address: QWord; local_handle: Pmca_btl_base_registration_handle_t; remote_handle: Pmca_btl_base_registration_handle_t; compare: QWord; value: QWord; flags: integer; order: integer; cbfunc: mca_btl_base_rdma_completion_fn_t; cbcontext: Pointer; cbdata: Pointer): integer;
   mca_btl_base_module_register_mem_fn_t= function(btl: Pmca_btl_base_module_t; endpoint: Pmca_btl_base_endpoint_t; base: Pointer; size: valuint; flags: DWord): Pmca_btl_base_registration_handle_t;
   mca_btl_base_module_deregister_mem_fn_t= function(btl: Pmca_btl_base_module_t; handle: Pmca_btl_base_registration_handle_t): integer;
-  mca_mpool_base_module_address_fn_t= procedure(mpool: Pmca_mpool_base_module_t);
-  mca_mpool_base_module_alloc_fn_t= procedure(mpool: Pmca_mpool_base_module_t; size: valuint; align: valuint; flags: DWord);
-  mca_mpool_base_module_realloc_fn_t= procedure(mpool: Pmca_mpool_base_module_t; addr: Pointer; size: valuint);
-  mca_mpool_base_module_free_fn_t= procedure(mpool: Pmca_mpool_base_module_t; addr: Pointer);
-  mca_mpool_base_module_finalize_fn_t= procedure(mpool: Pmca_mpool_base_module_t);
-  mca_mpool_base_module_ft_event_fn_t= function(state: integer): integer;
   mca_btl_base_module_register_error_fn_t= function(btl: Pmca_btl_base_module_t; cbfunc: mca_btl_base_module_error_cb_fn_t): integer;
   mca_btl_base_module_ft_event_fn_t= function(state: integer): integer;
   mca_btl_base_module_flush_fn_t= function(btl: Pmca_btl_base_module_t; endpoint: Pmca_btl_base_endpoint_t): integer;
+  mca_btl_base_module_recv_cb_fn_t = procedure(btl: Pmca_btl_base_module_t; tag: mca_btl_base_tag_t; descriptor: Pmca_btl_base_descriptor_t;	cbdata: Pointer);
 
   mca_btl_base_module_t = packed record
     btl_component				: Pmca_btl_base_component_t; 
@@ -81,3 +136,57 @@
     btl_flush					: mca_btl_base_module_flush_fn_t;
     padding					: array[0..255] of Byte;
   end;
+
+  mca_btl_openib_module_t = packed record
+    super			: mca_btl_base_module_t;
+    btl_inited			: longbool;
+    srqs_created		: longbool;
+    port_info			: mca_btl_openib_modex_message_t;
+    cpcs			: opal_btl_openib_connect_base_module_t;
+    num_cpcs			: Byte;
+    device			: Pmca_btl_openib_device_t;
+    port_num			: Byte;                  
+    pkey_index			: Word;
+    ib_port_attr		: ibv_port_attr;
+    lid				: Word;                      
+    apm_port			: integer;                      
+    src_path_bits		: Byte;             
+    num_peers			: integer;
+    ib_lock			: opal_mutex_t;
+    eager_rdma_frag_size	: valuint;    
+    eager_rdma_channels		: integer;
+    error_cb			: mca_btl_base_module_error_cb_fn_t;
+    qps				: Pmca_btl_openib_module_qp_t;
+    local_procs			: integer;
+    atomic_ops_be		: longbool;
+  end;  
+  
+  mca_btl_openib_proc_modex_t = packed record
+    pm_port_info	: mca_btl_openib_modex_message_t;
+    pm_cpc_data		: Popal_btl_openib_connect_base_module_data_t;
+    pm_cpc_data_count	: Byte;
+  end;
+  
+  mca_btl_openib_proc_t = packed record
+    super		: opal_list_item_t;
+    proc_opal		: Popal_proc_t;
+    proc_ports		: Pmca_btl_openib_proc_modex_t;
+    proc_port_count	: Word;
+    openib_btls		: opal_list_t;
+    proc_endpoints	: PPmca_btl_base_endpoint_t;
+    proc_endpoint_count	: valuint;
+    proc_lock		: opal_mutex_t;
+  end;
+
+  mca_btl_base_completion_fn_t = procedure(module: Pmca_btl_base_module_t; endpoint: Pmca_btl_base_endpoint_t; descriptor: Pmca_btl_base_descriptor_t; status: integer);
+
+  mca_btl_base_descriptor_t = packed record
+    super		: opal_free_list_item_t;
+    des_segments	: Pmca_btl_base_segment_t;  
+    des_segment_count	: valuint;              
+    des_cbfunc		: mca_btl_base_completion_fn_t;
+    des_cbdata		: pointer;                       
+    des_context		: pointer;                      
+    des_flags		: DWord;                     
+    order		: Byte;
+  end;  

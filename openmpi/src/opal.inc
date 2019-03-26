@@ -7,11 +7,7 @@
   Popal_list_t			= ^opal_list_t;
   Popal_convertor_t		= ^opal_convertor_t;
   
-  opal_free_list_item_t = packed record
-    super			: opal_list_item_t;
-    registration		: Pmca_rcache_base_registration_t;
-    ptr				: Pointer;
-  end;
+
 
   
   Tsval = packed record
@@ -139,6 +135,12 @@
 {$endif}
   end;
 
+  opal_free_list_item_t = packed record
+    super			: opal_list_item_t;
+    registration		: Pmca_rcache_base_registration_t;
+    ptr				: Pointer;
+  end;  
+  
   opal_list_t = packed record
     super		: opal_object_t;
     opal_list_sentinel	: opal_list_item_t;

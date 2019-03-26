@@ -1,4 +1,4 @@
-    
+  Pmca_pml_comm_t		= ^mca_pml_comm_t;
   Pmca_pml_ob1_comm_proc_t	= ^mca_pml_ob1_comm_proc_t; 
   Pmca_pml_ob1_recv_frag_t	= ^mca_pml_ob1_recv_frag_t;
   

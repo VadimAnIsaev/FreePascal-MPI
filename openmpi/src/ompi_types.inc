@@ -2,22 +2,6 @@
 Type  
   pvaluint = ^valuint;
   
-  PMPI_Comm	= ^TMPI_Comm;
-  Pompi_communicator_t = ^ompi_communicator_t;
-
-  {$I mca.inc}
-  
-  PMPI_File	= ^TMPI_File;
-  PMPI_Win	= ^TMPI_Win;
-  Pompi_win_t	= ^ompi_win_t;
-//----------------------------------------
-  Pompi_datatype_t = pointer;//^ompi_datatype_t;
-  Pompi_op_t	= pointer;
-  Pompi_request_t = pointer;
-
-//----------------------------------------
-  Pompi_group_t = ^ompi_group_t;
-    
   TMPI_Aint	= integer;
   PMPI_Aint	= ^TMPI_Aint;
   TMPI_Count	= int64;
@@ -26,6 +10,25 @@ Type
   PMPI_Offset	= ^TMPI_Offset;
   TMPI_Fint	= integer;
   PMPI_Fint	= ^TMPI_Fint;
+  
+  PMPI_Comm	= ^TMPI_Comm;
+  Pompi_communicator_t = ^ompi_communicator_t;
+
+  {$I mca.inc}
+  
+  PMPI_File	= ^TMPI_File;
+  PMPI_Win	= ^TMPI_Win;
+    
+  Pompi_win_t	= ^ompi_win_t;
+
+//----------------------------------------
+  Pompi_datatype_t	= pointer;//^ompi_datatype_t;
+  Pompi_op_t		= pointer;
+  Pompi_request_t	= pointer;
+
+//----------------------------------------
+  Pompi_group_t		= ^ompi_group_t;
+  Pompi_errhandler_t	= ^ompi_errhandler_t;
 
   ompi_errhandler_type_t = 
   (
@@ -48,7 +51,6 @@ Type
     OMPI_WIN_ACCUMULATE_OPS_SAME_OP_NO_OP,
     OMPI_WIN_ACCUMULATE_OPS_SAME_OP
   );
-
   
   ompi_group_sporadic_list_t = packed record
     rank_first	: integer;
@@ -136,7 +138,7 @@ Type
     w_f_to_c_index	: integer;
     error_handler	: ompi_errhandler_t;
     errhandler_type	: ompi_errhandler_type_t;
-    w_osc_module	: ^ompi_osc_base_module_t;
+    w_osc_module	: Pompi_osc_base_module_t;
     w_acc_order		: longint;
   end;
   TMPI_Win = ompi_win_t;
@@ -161,9 +163,9 @@ Type
 {$ifdef OMPI_WANT_PERUSE}
     c_peruse_handles	: ^^ompi_peruse_handle_t;
 {$endif}
-    error_handler	: ^ompi_errhandler_t;
+    error_handler	: Pompi_errhandler_t;
     errhandler_type	: ompi_errhandler_type_t;
-    c_pml_comm		: ^mca_pml_comm_t;
+    c_pml_comm		: Pmca_pml_comm_t;
     c_coll		: ^mca_coll_base_comm_coll_t;
   end;
   TMPI_Comm = ompi_communicator_t;

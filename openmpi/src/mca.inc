@@ -9,13 +9,13 @@
   
 
 {$I opal.inc}  
-{$I mca_pml.inc}
-{$I mca_btl.inc}
-  
-  mca_base_module_2_0_0_t = packed record
-    dummy_value: integer;
+
+  mca_base_component_data_2_0_0_t = packed record
+    param_field	: DWord;
+    reserved	: array[0..31] of Char;
   end;
-  
+  mca_base_component_data_t = mca_base_component_data_2_0_0_t;
+
   mca_base_open_component_1_0_0_fn_t = function(): integer;
   mca_base_close_component_1_0_0_fn_t = function(): integer;
   mca_base_query_component_2_0_0_fn_t = function(module: Pmca_base_module_2_0_0_t; priority: Pinteger): integer;
@@ -45,14 +45,16 @@
     reserved				: array[0..27] of Char;
   end;
   mca_base_component_t = mca_base_component_2_1_0_t;
+
+{$I mca_mpool.inc}
+{$I mca_btl.inc}
+{$I mca_pml.inc}
+{$I mca_rcache.inc}
+
   
-  mca_base_component_data_2_0_0_t = packed record
-    param_field	: DWord;
-    reserved	: array[0..31] of Char;
+  mca_base_module_2_0_0_t = packed record
+    dummy_value: integer;
   end;
-  mca_base_component_data_t = mca_base_component_data_2_0_0_t;
-  
-  {$I mca_rcache.inc}
   
   mca_topo_base_component_init_query_2_2_0_fn_t = function(enable_progress_threads: longbool; enable_mpi_threads: longbool): integer;
   mca_topo_base_component_comm_query_2_2_0_fn_t = function(const comm: Pompi_communicator_t; priority: Pinteger; ttype: DWord): Pmca_topo_base_module_t;
