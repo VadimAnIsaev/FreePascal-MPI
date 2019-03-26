@@ -1,0 +1,135 @@
+
+  Pmca_topo_base_component_t			= ^mca_topo_base_component_t;
+  Pmca_topo_base_comm_dist_graph_2_2_0_t	= ^mca_topo_base_comm_dist_graph_2_2_0_t;
+  Pmca_topo_base_comm_cart_2_2_0_t		= ^mca_topo_base_comm_cart_2_2_0_t;
+  Pmca_topo_base_comm_graph_2_2_0_t		= ^mca_topo_base_comm_graph_2_2_0_t;
+  Pmca_base_module_2_0_0_t			= ^mca_base_module_2_0_0_t;
+  Pmca_topo_base_module_t			= ^mca_topo_base_module_t;
+  Pmca_rcache_base_registration_t		= ^mca_rcache_base_registration_t;
+  
+
+{$I opal.inc}  
+{$I mca_pml.inc}
+{$I mca_btl.inc}
+  
+  mca_base_module_2_0_0_t = packed record
+    dummy_value: integer;
+  end;
+  
+  mca_base_open_component_1_0_0_fn_t = function(): integer;
+  mca_base_close_component_1_0_0_fn_t = function(): integer;
+  mca_base_query_component_2_0_0_fn_t = function(module: Pmca_base_module_2_0_0_t; priority: Pinteger): integer;
+  mca_base_register_component_params_2_0_0_fn_t = function(): integer;
+
+  mca_base_component_2_1_0_t = packed record
+    mca_major_version			: integer;
+    mca_minor_version			: integer;
+    mca_release_version			: integer;
+    mca_project_name			: array[0..MCA_BASE_MAX_PROJECT_NAME_LEN] of Char;
+    mca_project_major_version		: integer;
+    mca_project_minor_version		: integer;
+    mca_project_release_version		: integer;
+    mca_type_name			: array[0..MCA_BASE_MAX_TYPE_NAME_LEN] of Char;
+    mca_type_major_version		: integer;
+    mca_type_minor_version		: integer;
+    mca_type_release_version		: integer;
+    mca_component_name			: array[0..MCA_BASE_MAX_COMPONENT_NAME_LEN] of Char;
+    mca_component_major_version		: integer;
+    mca_component_minor_version		: integer;
+    mca_component_release_version	: integer;
+    mca_open_component			: mca_base_open_component_1_0_0_fn_t;
+    mca_close_component			: mca_base_close_component_1_0_0_fn_t;
+    mca_query_component			: mca_base_query_component_2_0_0_fn_t;
+    mca_register_component_params	: mca_base_register_component_params_2_0_0_fn_t;
+    mca_component_flags			: integer;
+    reserved				: array[0..27] of Char;
+  end;
+  mca_base_component_t = mca_base_component_2_1_0_t;
+  
+  mca_base_component_data_2_0_0_t = packed record
+    param_field	: DWord;
+    reserved	: array[0..31] of Char;
+  end;
+  mca_base_component_data_t = mca_base_component_data_2_0_0_t;
+  
+  {$I mca_rcache.inc}
+  
+  mca_topo_base_component_init_query_2_2_0_fn_t = function(enable_progress_threads: longbool; enable_mpi_threads: longbool): integer;
+  mca_topo_base_component_comm_query_2_2_0_fn_t = function(const comm: Pompi_communicator_t; priority: Pinteger; ttype: DWord): Pmca_topo_base_module_t;
+  
+  mca_topo_base_component_t = packed record
+    topoc_version	: mca_base_component_t;
+    topoc_data		: mca_base_component_data_t;
+    topoc_init_query	: mca_topo_base_component_init_query_2_2_0_fn_t;
+    topoc_comm_query	: mca_topo_base_component_comm_query_2_2_0_fn_t;
+  end; 
+
+  mca_topo_base_comm_cart_2_2_0_t = packed record
+    super	: opal_object_t;
+    ndims	: integer;
+    dims	: Pinteger;
+    periods	: Pinteger;
+    coords	: Pinteger;
+  end;
+
+  mca_topo_base_comm_graph_2_2_0_t = packed record
+    super	: opal_object_t;
+    nnodes	: integer;
+    index	: Pinteger;
+    edges	: Pinteger;
+  end;
+  mca_topo_base_comm_graph_t = mca_topo_base_comm_graph_2_2_0_t;
+
+  mca_topo_base_comm_dist_graph_2_2_0_t = packed record
+    super	: opal_object_t;
+    iin		: Pinteger;
+    inw		: Pinteger;
+    oout	: Pinteger;
+    outw	: Pinteger;
+    indegree	: integer;
+    outdegree	: integer;
+    weighted	: longbool;
+  end;
+  
+  mca_topo_base_comm_cgd_union_t = packed record
+    graph	: Pmca_topo_base_comm_graph_2_2_0_t;
+    cart	: Pmca_topo_base_comm_cart_2_2_0_t;
+    dist_graph	: Pmca_topo_base_comm_dist_graph_2_2_0_t;
+  end;
+
+  mca_topo_base_module_cart_coords_fn_t = function(comm: Pompi_communicator_t; rank: integer; maxdims: integer; coords: Pinteger): integer;
+  mca_topo_base_module_cart_create_fn_t = function(topo_module: Pmca_topo_base_module_t; old_comm: Pompi_communicator_t; ndims: integer; const dims: Pinteger; const periods: Pinteger; reorder: longbool; comm_topo: Pompi_communicator_t): integer;		 
+  mca_topo_base_module_cart_get_fn_t = function(comm: Pompi_communicator_t; maxdims: integer; dims: Pinteger; periods: Pinteger; coords: Pinteger): integer;
+  mca_topo_base_module_cartdim_get_fn_t = function(comm: Pompi_communicator_t; ndims: Pinteger): integer;
+  mca_topo_base_module_cart_map_fn_t = function(comm: Pompi_communicator_t; ndims: integer; const dims: Pinteger; const periods: Pinteger; newrank: Pinteger): integer;
+  mca_topo_base_module_cart_rank_fn_t = function(comm: Pompi_communicator_t; const coords: pinteger; rank: Pinteger): integer;
+  mca_topo_base_module_cart_shift_fn_t = function(comm: Pompi_communicator_t; direction: integer; disp: integer; rank_source: Pinteger; rank_dest: Pinteger): integer;
+  mca_topo_base_module_cart_sub_fn_t = function(comm: Pompi_communicator_t; const remain_dims: Pinteger; new_comm: Pompi_communicator_t): integer;
+ 
+  mca_topo_base_cart_module_2_2_0_t = packed record
+    cart_coords	: mca_topo_base_module_cart_coords_fn_t;
+    cart_create	: mca_topo_base_module_cart_create_fn_t;
+    cart_get	: mca_topo_base_module_cart_get_fn_t;
+    cartdim_get	: mca_topo_base_module_cartdim_get_fn_t;
+    cart_map	: mca_topo_base_module_cart_map_fn_t;
+    cart_rank	: mca_topo_base_module_cart_rank_fn_t;
+    cart_shift	: mca_topo_base_module_cart_shift_fn_t;
+    cart_sub	: mca_topo_base_module_cart_sub_fn_t;
+  end;
+  
+  
+  Ttopo = packed record
+    Case byte Of
+      0: (cart		: mca_topo_base_cart_module_2_2_0_t);
+      1: (graph		: mca_topo_base_graph_module_2_2_0_t);
+      2: (dist_graph	: mca_topo_base_dist_graph_module_2_2_0_t);
+  end;
+  
+  mca_topo_base_module_t = packed record
+    super		: opal_object_t;
+    ttype		: DWord;
+    reorder		: longbool;
+    topo_component	: Pmca_topo_base_component_t;
+    topo		: Ttopo;
+    mtc			: mca_topo_base_comm_cgd_union_t;
+  end;
