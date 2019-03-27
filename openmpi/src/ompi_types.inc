@@ -14,12 +14,11 @@ Type
   PMPI_Comm	= ^TMPI_Comm;
   Pompi_communicator_t = ^ompi_communicator_t;
 
-  {$I mca.inc}
-  
   PMPI_File	= ^TMPI_File;
-  PMPI_Win	= ^TMPI_Win;
+  PMPI_Win 	= ^TMPI_Win;
     
-  Pompi_win_t	= ^ompi_win_t;
+  Pompi_win_t = ^ompi_win_t;
+  Pompi_proc_t = ^ompi_proc_t;
 
 //----------------------------------------
   Pompi_datatype_t	= pointer;//^ompi_datatype_t;
@@ -30,6 +29,9 @@ Type
   Pompi_group_t		= ^ompi_group_t;
   Pompi_errhandler_t	= ^ompi_errhandler_t;
 
+  {$I mca.inc}
+  
+  
   ompi_errhandler_type_t = 
   (
     OMPI_ERRHANDLER_TYPE_PREDEFINED,
@@ -86,8 +88,7 @@ Type
     proc_endpoints	: array[0..OMPI_PROC_ENDPOINT_TAG_MAX-1] of Pointer;
     padding		: array[0..OMPI_PROC_PADDING_SIZE-1] of Char;
   end;
-  Pompi_proc_t = ^ompi_proc_t;
-
+  
   ompi_group_t = packed record
     super		: opal_object_t;    
     grp_proc_count	: integer;     

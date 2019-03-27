@@ -1,6 +1,3 @@
-  Pmca_mpool_base_module_t = ^mca_mpool_base_module_t;
-  PPmca_mpool_base_module_t = ^Pmca_mpool_base_module_t;
-  Pmca_mpool_base_component_t = ^mca_mpool_base_component_t;;
 
   mca_mpool_base_component_query_fn_t = function(const hints: PChar, priority: Pinteger; module: PPmca_mpool_base_module_t): integer;
   

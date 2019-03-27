@@ -14,4 +14,5 @@ Const
   BTL_OPENIB_HP_CQ = 0;
   BTL_OPENIB_LP_CQ = 1;
   BTL_OPENIB_MAX_CQ = 2;
-  
+
+  BCF_MAX_NAME = 64;

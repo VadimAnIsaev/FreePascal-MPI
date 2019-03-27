@@ -1,10 +1,7 @@
-  Pmca_rcache_base_module_t			= ^mca_rcache_base_module_t;
-  Pmca_rcache_base_registration_t		= ^mca_rcache_base_registration_t;
-
-  mca_rcache_base_module_register_fn_t		= function(rcache: Pmca_rcache_base_module_t, addr: Pointer; size: valuint; flags: DWord; access_flags: integer; reg: ^^mca_rcache_base_registration_t): integer; 
+  mca_rcache_base_module_register_fn_t		= function(rcache: Pmca_rcache_base_module_t; addr: Pointer; size: valuint; flags: DWord; access_flags: integer; reg: PPmca_rcache_base_registration_t): integer; 
   mca_rcache_base_module_deregister_fn_t	= function(rcache: Pmca_rcache_base_module_t; reg: Pmca_rcache_base_registration_t): integer;
-  mca_rcache_base_module_find_fn_t		= function(rcache: Pmca_rcache_base_module_t; addr: Pointer; size: valuint; reg: ^^mca_rcache_base_registration_t);
-  mca_rcache_base_module_invalidate_range_fn_t	= function(rcache: Pmca_rcache_base_module_t; addr: Pointer; size: valuint);
+  mca_rcache_base_module_find_fn_t		= function(rcache: Pmca_rcache_base_module_t; addr: Pointer; size: valuint; reg: PPmca_rcache_base_registration_t): integer;
+  mca_rcache_base_module_invalidate_range_fn_t	= function(rcache: Pmca_rcache_base_module_t; addr: Pointer; size: valuint): integer;
   mca_rcache_base_module_finalize_fn_t		= procedure(rcache: Pmca_rcache_base_module_t);
   mca_rcache_base_module_evict_fn_t		= function(rcache: Pmca_rcache_base_module_t): longbool;
 

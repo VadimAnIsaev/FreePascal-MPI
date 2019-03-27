@@ -1,13 +1,4 @@
-
-  Pmca_topo_base_component_t			= ^mca_topo_base_component_t;
-  Pmca_topo_base_comm_dist_graph_2_2_0_t	= ^mca_topo_base_comm_dist_graph_2_2_0_t;
-  Pmca_topo_base_comm_cart_2_2_0_t		= ^mca_topo_base_comm_cart_2_2_0_t;
-  Pmca_topo_base_comm_graph_2_2_0_t		= ^mca_topo_base_comm_graph_2_2_0_t;
-  Pmca_base_module_2_0_0_t			= ^mca_base_module_2_0_0_t;
-  Pmca_topo_base_module_t			= ^mca_topo_base_module_t;
-  Pmca_rcache_base_registration_t		= ^mca_rcache_base_registration_t;
-  
-
+{$I ptrs.inc}  
 {$I opal.inc}  
 
   mca_base_component_data_2_0_0_t = packed record
@@ -46,12 +37,40 @@
   end;
   mca_base_component_t = mca_base_component_2_1_0_t;
 
-{$I mca_mpool.inc}
+// -- mca-mpool --------------------------------------------------------
+  mca_mpool_base_component_query_fn_t = function(const hints: PChar; priority: Pinteger; module: PPmca_mpool_base_module_t): integer;
+  
+  mca_mpool_base_component_t = packed record
+    mpool_version	: mca_base_component_t;        
+    mpool_data		: mca_base_component_data_t;
+    mpool_query		: mca_mpool_base_component_query_fn_t; 
+  end;
+
+  mca_mpool_base_module_address_fn_t	= procedure(mpool: Pmca_mpool_base_module_t);
+  mca_mpool_base_module_alloc_fn_t	= procedure(mpool: Pmca_mpool_base_module_t; size: valuint; align: valuint; flags: DWord);
+  mca_mpool_base_module_realloc_fn_t	= procedure(mpool: Pmca_mpool_base_module_t; addr: Pointer; size: valuint);
+  mca_mpool_base_module_free_fn_t	= procedure(mpool: Pmca_mpool_base_module_t; addr: Pointer);
+  mca_mpool_base_module_finalize_fn_t	= procedure(mpool: Pmca_mpool_base_module_t);
+  mca_mpool_base_module_ft_event_fn_t	= function(state: integer): integer;
+
+  mca_mpool_base_module_t = packed record
+    mpool_component		: Pmca_mpool_base_component_t;
+    mpool_base			: mca_mpool_base_module_address_fn_t;
+    mpool_alloc			: mca_mpool_base_module_alloc_fn_t; 
+    mpool_realloc		: mca_mpool_base_module_realloc_fn_t;
+    mpool_free			: mca_mpool_base_module_free_fn_t;      
+    mpool_finalize		: mca_mpool_base_module_finalize_fn_t;
+    mpool_ft_event		: mca_mpool_base_module_ft_event_fn_t;
+    flags			: DWord; 
+    mpool_allocation_unit	: valuint; 
+    mpool_name			: PChar;
+  end;
+// -- mca-mpool --------------------------------------------------------
+  
 {$I mca_btl.inc}
 {$I mca_pml.inc}
 {$I mca_rcache.inc}
-
-  
+    
   mca_base_module_2_0_0_t = packed record
     dummy_value: integer;
   end;
@@ -117,6 +136,46 @@
     cart_rank	: mca_topo_base_module_cart_rank_fn_t;
     cart_shift	: mca_topo_base_module_cart_shift_fn_t;
     cart_sub	: mca_topo_base_module_cart_sub_fn_t;
+  end;
+  
+  mca_topo_base_module_graph_create_fn_t = function(mca_topo_base_module_t *topo_module,
+                     ompi_communicator_t* old_comm,
+                     int nnodes,
+                     const int *index,
+                     const int *edges,
+                     bool reorder,
+                     ompi_communicator_t** new_comm): integer;
+
+  mca_topo_base_module_graph_get_fn_t = function(struct ompi_communicator_t *comm,
+                     int maxindex,
+                     int maxedges,
+                     int *index,
+                     int *edges): integer;
+
+  mca_topo_base_module_graph_map_fn_t = function(comm: Pompi_communicator_t;
+                     nnodes: integer;
+                     const index: Pinteger;
+                     const edges: Pinteger;
+                     newrank: Pinteger): integer;
+  mca_topo_base_module_graphdims_get_fn_t = function(comm: Pompi_communicator_t;
+                     nnodes: Pinteger;
+                     nnedges: Pinteger): integer;
+  mca_topo_base_module_graph_neighbors_fn_t = function(comm: Pompi_communicator_t;
+                     rank: integer;
+                     maxneighbors: integer;
+                     neighbors: Pinteger): integer;
+  mca_topo_base_module_graph_neighbors_count_fn_t = function(comm: Pompi_communicator_t;
+                     rank: integer;
+                     nneighbors: Pinteger): integer;
+
+  
+  mca_topo_base_graph_module_2_2_0_t = packed record
+    graph_create: mca_topo_base_module_graph_create_fn_t;
+    graph_get: mca_topo_base_module_graph_get_fn_t;
+    graph_map: mca_topo_base_module_graph_map_fn_t;
+    graphdims_get: mca_topo_base_module_graphdims_get_fn_t;
+    graph_neighbors: mca_topo_base_module_graph_neighbors_fn_t;
+    graph_neighbors_count: mca_topo_base_module_graph_neighbors_count_fn_t;
   end;
   
   
