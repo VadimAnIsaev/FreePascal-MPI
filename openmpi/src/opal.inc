@@ -117,6 +117,18 @@
     m_lock_atomic	: opal_atomic_lock_t;
   end;
   
+  opal_pointer_array_t = packed record
+    super: opal_object_t;
+    lock: opal_mutex_t;
+    lowest_free: integer;
+    number_free: integer;
+    size: integer;
+    max_size: integer;
+    block_size: integer;
+    free_bits: ^QWord;
+    addr: pointer;
+  end;
+  
   Tptr = packed record
     key		: Pointer;
     key_size	: valuint;
@@ -184,12 +196,36 @@
 
   opal_free_list_item_init_fn_t = function(item: Popal_free_list_item_t; ctx: pointer): integer;
 
+  Topaldata = packed record
+     counter: QWord;
+     item: Popal_list_item_t;
+  end;
+
+  opal_int128_t = int128rec;
+{    a: int64;
+    b: int64;
+  end;}
+  
+  opal_counted_pointer_t = packed record
+    Case Byte of
+      0: (data: TopalData);
+{$if defined(OPAL_HAVE_ATOMIC_COMPARE_EXCHANGE_128 && HAVE_OPAL_INT128_T)}
+      1: (value: opal_int128_t);
+{$endif}
+  end;
+
+  
   opal_lifo_t = packed record
     super: opal_object_t;
     opal_lifo_head: opal_counted_pointer_t;
     opal_lifo_ghost: opal_list_item_t;
   end;
 
+  opal_condition_t = packed record
+    super: opal_object_t;
+    c_waiting: integer;
+    c_signaled: integer;
+  end;
   
   opal_free_list_t = packed record
     super: opal_lifo_t ;
@@ -203,7 +239,7 @@
     fl_payload_buffer_alignment: valuint;
     fl_frag_class: Popal_class_t;
     fl_mpool: Pmca_mpool_base_module_t;
-    fl_rcache: mca_rcache_base_module_t;
+    fl_rcache: Pmca_rcache_base_module_t;
     fl_lock: opal_mutex_t;
     fl_condition: opal_condition_t;
     fl_allocations: opal_list_t;

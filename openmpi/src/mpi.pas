@@ -4,6 +4,8 @@ Unit mpi;
 
 interface
 
+Uses SysUtils;
+
 Const
 {$IFDEF WINDOWS}  
   LIBMPI = 'cygmpi-40.dll';

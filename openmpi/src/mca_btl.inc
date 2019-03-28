@@ -1,3 +1,5 @@
+// --- Независящие от других типов -------------------
+
   mca_btl_openib_qp_t = (
     MCA_BTL_OPENIB_PP_QP,
     MCA_BTL_OPENIB_SRQ_QP,
@@ -23,19 +25,26 @@
     MCA_BTL_IB_ADDR_CLOSED
   );
   
+  mca_btl_openib_endpoint_state_t = (
+    MCA_BTL_IB_CONNECTING,
+    MCA_BTL_IB_CONNECT_ACK,
+    MCA_BTL_IB_WAITING_ACK,
+    MCA_BTL_IB_CONNECTED,
+    MCA_BTL_IB_CLOSED,
+    MCA_BTL_IB_FAILED
+  );
+
+  mca_btl_openib_transport_type_t = (
+    MCA_BTL_OPENIB_TRANSPORT_IB,
+    MCA_BTL_OPENIB_TRANSPORT_IWARP,
+    MCA_BTL_OPENIB_TRANSPORT_RDMAOE,
+    MCA_BTL_OPENIB_TRANSPORT_UNKNOWN,
+    MCA_BTL_OPENIB_TRANSPORT_SIZE
+  );
+  
   mca_btl_openib_frag_t = (MCA_BTL_OPENIB_FRAG_RECV, MCA_BTL_OPENIB_FRAG_RECV_USER, MCA_BTL_OPENIB_FRAG_SEND, MCA_BTL_OPENIB_FRAG_SEND_USER, MCA_BTL_OPENIB_FRAG_EAGER_RDMA, MCA_BTL_OPENIB_FRAG_CONTROL, MCA_BTL_OPENIB_FRAG_COALESCED);
-  
-  mca_btl_openib_com_frag_t = packed record
-    super: mca_btl_openib_frag_t;
-    sg_entry: ibv_sge;
-    registration: Pmca_btl_openib_reg_t;
-    endpoint: Pmca_btl_base_endpoint_t;
-    n_wqes_inflight: integer;
-  end;
-  
-  mca_btl_openib_out_frag_t = packed record
-    super: mca_btl_openib_com_frag_t;
-    sr_desc: ibv_send_wr;
+
+  mca_btl_base_registration_handle_t = packed record
   end;
   
   mca_btl_base_tag_t = Byte;
@@ -69,6 +78,135 @@
 {$endif}
   end;
 
+  mca_btl_openib_rem_qp_info_t = packed record
+    rem_qp_num: DWord;
+    rem_psn: DWord;
+  end;
+
+  mca_btl_openib_rem_srq_info_t = packed record
+    rem_srq_num: DWord;
+  end;
+
+  mca_btl_openib_modex_message_t = packed record
+    subnet_id: QWord;
+    lid: Word;
+    apm_lid: Word;
+    mtu: Byte;
+    vendor_id: DWord;
+    vendor_part_id: DWord;
+    transport_type: Byte;
+    eend: Byte;
+  end;
+
+// --- Независящие от других типов -------------------
+
+  mca_btl_openib_module_pp_qp_t = packed record
+    dummy: integer;
+  end;
+
+  
+  mca_btl_openib_module_srq_qp_t = packed record
+    srq: Pibv_srq;
+    rd_posted: integer;
+    sd_credits: integer;
+    pending_frags: array[0..1] of opal_list_t;
+    rd_curr_num: integer;
+    rd_low_local: integer;
+    srq_limit_event_flag: longbool;
+  end;
+
+
+  Tbtlu = packed record
+     Case Byte of
+       0: (pp_qp: mca_btl_openib_module_pp_qp_t);
+       1: (srq_qp: mca_btl_openib_module_srq_qp_t);
+  end;
+  
+  mca_btl_openib_module_qp_t = packed record
+    u: Tbtlu;
+  end;
+  
+  
+  mca_btl_openib_device_qp_t = packed record
+    send_free: opal_free_list_t;
+    recv_free: opal_free_list_t;
+  end;
+
+  
+  mca_btl_openib_rem_info_t = packed record
+    rem_lid: Word;
+    rem_subnet_id: Word;
+    rem_mtu: Word;
+    rem_index: Word;
+    rem_qps: Pmca_btl_openib_rem_qp_info_t;
+    rem_srqs: Pmca_btl_openib_rem_srq_info_t;
+    rem_vendor_id: DWord;
+    rem_vendor_part_id: DWord;
+    rem_transport_type: mca_btl_openib_transport_type_t;
+  end;
+
+
+  mca_btl_openib_reg_t = packed record
+    base: mca_rcache_base_registration_t;
+    mr: Pibv_mr;
+    btl_handle: mca_btl_base_registration_handle_t;
+  end;
+  
+  mca_btl_openib_in_frag_t = packed record
+    super: mca_btl_openib_frag_t;
+    sg_entry: ibv_sge;
+    registration: mca_btl_openib_reg_t;
+    endpoint: Pmca_btl_base_endpoint_t;
+    n_wqes_inflight: DWord;
+  end;
+  
+  mca_btl_openib_recv_frag_t = packed record
+    super: mca_btl_openib_in_frag_t;
+    hdr: Pmca_btl_openib_header_t;
+    ftr: Pmca_btl_openib_footer_t;
+    rd_desc: ibv_recv_wr;
+    qp_idx: Byte;
+  end;
+  
+  mca_btl_openib_eager_rdma_local_t = packed record
+    base: opal_ptr_t;
+    alloc_base: pointer;
+    frags: Pmca_btl_openib_recv_frag_t;
+    reg: Pmca_btl_openib_reg_t;
+    head: Word;
+    tail: Word;
+    credits: integer;
+    rd_win: integer;
+{$if defined(OPAL_ENABLE_DEBUG)}
+    seq: DWord;
+{$endif}
+    lock: opal_mutex_t;
+    rd_low: integer;
+  end;
+  
+  mca_btl_openib_eager_rdma_remote_t = packed record
+    base: opal_ptr_t;
+    rkey: DWord;
+    head: integer;
+    tokens: integer;
+{$if defined(OPAL_ENABLE_DEBUG)}
+    seq: DWord;
+{$endif}
+  end;
+  
+  mca_btl_openib_com_frag_t = packed record
+    super: mca_btl_openib_frag_t;
+    sg_entry: ibv_sge;
+    registration: Pmca_btl_openib_reg_t;
+    endpoint: Pmca_btl_base_endpoint_t;
+    n_wqes_inflight: integer;
+  end;
+  
+  mca_btl_openib_out_frag_t = packed record
+    super: mca_btl_openib_com_frag_t;
+    sr_desc: ibv_send_wr;
+  end;
+  
   mca_btl_openib_send_control_frag_t = packed record
     super: mca_btl_openib_out_frag_t;
     hdr: Pmca_btl_openib_header_t;
@@ -164,9 +302,6 @@
   end;
   
   
-  mca_btl_base_registration_handle_t = packed record
-  end;
-
   mca_btl_base_rdma_completion_fn_t = procedure(module: Pmca_btl_base_module_t; endpoint: Pmca_btl_base_endpoint_t; local_address: Pointer; local_handle: Pmca_btl_base_registration_handle_t; context: pointer; cbdata: pointer; status: integer);
   
   mca_btl_base_module_error_cb_fn_t = procedure(btl: Pmca_btl_base_module_t; flags: integer; errproc: Popal_proc_t; btlinfo: PChar);

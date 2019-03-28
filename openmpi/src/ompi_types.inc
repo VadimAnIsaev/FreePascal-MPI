@@ -13,6 +13,7 @@ Type
   
   PMPI_Comm	= ^TMPI_Comm;
   Pompi_communicator_t = ^ompi_communicator_t;
+  PPompi_communicator_t = ^Pompi_communicator_t;
 
   PMPI_File	= ^TMPI_File;
   PMPI_Win 	= ^TMPI_Win;
@@ -24,10 +25,14 @@ Type
   Pompi_datatype_t	= pointer;//^ompi_datatype_t;
   Pompi_op_t		= pointer;
   Pompi_request_t	= pointer;
+  PPompi_request_t	= ^Pompi_request_t;
+  Pompi_info_t		= pointer;
+  Pompi_coll_tree_t	= pointer;
 
 //----------------------------------------
   Pompi_group_t		= ^ompi_group_t;
   Pompi_errhandler_t	= ^ompi_errhandler_t;
+
 
   {$I mca.inc}
   
@@ -167,7 +172,7 @@ Type
     error_handler	: Pompi_errhandler_t;
     errhandler_type	: ompi_errhandler_type_t;
     c_pml_comm		: Pmca_pml_comm_t;
-    c_coll		: ^mca_coll_base_comm_coll_t;
+    c_coll		: Pmca_coll_base_comm_coll_t;
   end;
   TMPI_Comm = ompi_communicator_t;
   

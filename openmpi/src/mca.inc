@@ -67,9 +67,10 @@
   end;
 // -- mca-mpool --------------------------------------------------------
   
+{$I mca_coll.inc}
+{$I mca_rcache.inc}
 {$I mca_btl.inc}
 {$I mca_pml.inc}
-{$I mca_rcache.inc}
     
   mca_base_module_2_0_0_t = packed record
     dummy_value: integer;
@@ -138,36 +139,12 @@
     cart_sub	: mca_topo_base_module_cart_sub_fn_t;
   end;
   
-  mca_topo_base_module_graph_create_fn_t = function(mca_topo_base_module_t *topo_module,
-                     ompi_communicator_t* old_comm,
-                     int nnodes,
-                     const int *index,
-                     const int *edges,
-                     bool reorder,
-                     ompi_communicator_t** new_comm): integer;
-
-  mca_topo_base_module_graph_get_fn_t = function(struct ompi_communicator_t *comm,
-                     int maxindex,
-                     int maxedges,
-                     int *index,
-                     int *edges): integer;
-
-  mca_topo_base_module_graph_map_fn_t = function(comm: Pompi_communicator_t;
-                     nnodes: integer;
-                     const index: Pinteger;
-                     const edges: Pinteger;
-                     newrank: Pinteger): integer;
-  mca_topo_base_module_graphdims_get_fn_t = function(comm: Pompi_communicator_t;
-                     nnodes: Pinteger;
-                     nnedges: Pinteger): integer;
-  mca_topo_base_module_graph_neighbors_fn_t = function(comm: Pompi_communicator_t;
-                     rank: integer;
-                     maxneighbors: integer;
-                     neighbors: Pinteger): integer;
-  mca_topo_base_module_graph_neighbors_count_fn_t = function(comm: Pompi_communicator_t;
-                     rank: integer;
-                     nneighbors: Pinteger): integer;
-
+  mca_topo_base_module_graph_create_fn_t = function(topo_module: Pmca_topo_base_module_t; old_comm: Pompi_communicator_t; nnodes: integer; const index: Pinteger; const edges: Pinteger; reorder:longbool; new_comm: PPompi_communicator_t): integer;
+  mca_topo_base_module_graph_get_fn_t = function(comm: Pompi_communicator_t; maxindex: integer;maxedges: integer; index: Pinteger; edges: Pinteger): integer;
+  mca_topo_base_module_graph_map_fn_t = function(comm: Pompi_communicator_t; nnodes: integer; const index: Pinteger; const edges: Pinteger; newrank: Pinteger): integer;
+  mca_topo_base_module_graphdims_get_fn_t = function(comm: Pompi_communicator_t; nnodes: Pinteger; nnedges: Pinteger): integer;
+  mca_topo_base_module_graph_neighbors_fn_t = function(comm: Pompi_communicator_t; rank: integer; maxneighbors: integer; neighbors: Pinteger): integer;
+  mca_topo_base_module_graph_neighbors_count_fn_t = function(comm: Pompi_communicator_t; rank: integer; nneighbors: Pinteger): integer;
   
   mca_topo_base_graph_module_2_2_0_t = packed record
     graph_create: mca_topo_base_module_graph_create_fn_t;
@@ -177,6 +154,18 @@
     graph_neighbors: mca_topo_base_module_graph_neighbors_fn_t;
     graph_neighbors_count: mca_topo_base_module_graph_neighbors_count_fn_t;
   end;
+
+ mca_topo_base_module_dist_graph_create_fn_t = function(module: Pmca_topo_base_module_t; old_comm: Pompi_communicator_t; n: integer; const nodes: array of integer; const degrees: array of integer; const targets: array of integer; const weights: array of integer; info: Popal_info_t; reorder: integer; new_comm: PPompi_communicator_t): integer;
+ mca_topo_base_module_dist_graph_create_adjacent_fn_t = function(module: Pmca_topo_base_module_t; comm_old: Pompi_communicator_t; indegree: integer; const sources: array of integer; const sourceweights: array of integer; outdegree: integer; const destinations: array of integer; const destweights: array of integer; info: Popal_info_t; reorder: integer; comm_dist_graph: PPompi_communicator_t): integer;
+ mca_topo_base_module_dist_graph_neighbors_fn_t = function(comm: Pompi_communicator_t; maxindegree: integer; sources: array of integer; sourceweights: array of integer; maxoutdegree: integer; destinations: array of integer; destweights: array of integer): integer; 
+ mca_topo_base_module_dist_graph_neighbors_count_fn_t = function(comm: Pompi_communicator_t; inneighbors: PInteger; outneighbors: Pinteger; weighted: Pinteger): integer;
+ 
+ mca_topo_base_dist_graph_module_2_2_0_t = packed record
+    dist_graph_create		: mca_topo_base_module_dist_graph_create_fn_t;
+    dist_graph_create_adjacent	: mca_topo_base_module_dist_graph_create_adjacent_fn_t;
+    dist_graph_neighbors	: mca_topo_base_module_dist_graph_neighbors_fn_t;
+    dist_graph_neighbors_count	: mca_topo_base_module_dist_graph_neighbors_count_fn_t;
+ end;
   
   
   Ttopo = packed record
