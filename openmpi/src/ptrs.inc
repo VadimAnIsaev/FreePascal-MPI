@@ -45,6 +45,7 @@
   Popal_info_t = ^opal_info_t;
   Popal_free_list_item_t = ^opal_free_list_item_t;
   Popal_pointer_array_t = ^opal_pointer_array_t;
+  Popal_hash_table_t = ^opal_hash_table_t;
 
   Popal_btl_openib_connect_base_module_t = ^opal_btl_openib_connect_base_module_t;
   PPopal_btl_openib_connect_base_module_t = ^Popal_btl_openib_connect_base_module_t;
@@ -69,3 +70,8 @@
 
 
   Pib_address_t = ^ib_address_t;
+
+  Pibv_srq = ^ibv_srq;
+  Pibv_mr = ^ibv_mr;
+  Pibv_device = ^ibv_device;
+  Pibv_context = ^ibv_context;

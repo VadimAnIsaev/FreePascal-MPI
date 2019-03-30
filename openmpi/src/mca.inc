@@ -1,4 +1,5 @@
 {$I ptrs.inc}  
+{$I openib.inc}
 {$I opal.inc}  
 
   mca_base_component_data_2_0_0_t = packed record

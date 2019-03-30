@@ -78,7 +78,6 @@
     array_size: integer; 
     max_size: integer;   
   end;
-
   
   Tu = packed record
    case byte of
@@ -128,6 +127,26 @@
     free_bits: ^QWord;
     addr: pointer;
   end;
+  
+  opal_datatype_t = packed record
+    super: opal_object_t;  
+    flags: Word;  
+    id: Word;     
+    bdt_used: DWord;
+    size: valuint;
+    true_lb: valuint;
+    true_ub: valuint;
+    lb: valuint;
+    ub: valuint;
+    nbElems: valuint;
+    align: DWord;
+    loops: DWord;
+    name: array[0..OPAL_MAX_OBJECT_NAME-1] of char;
+    desc: dt_type_desc_t;
+    opt_desc: dt_type_desc_t;
+    ptypes: Pvaluint;
+  end;
+  
   
   Tptr = packed record
     key		: Pointer;
@@ -209,8 +228,10 @@
   opal_counted_pointer_t = packed record
     Case Byte of
       0: (data: TopalData);
-{$if defined(OPAL_HAVE_ATOMIC_COMPARE_EXCHANGE_128 && HAVE_OPAL_INT128_T)}
+{$if defined(OPAL_HAVE_ATOMIC_COMPARE_EXCHANGE_128)} 
+  {$if defined(HAVE_OPAL_INT128_T)}
       1: (value: opal_int128_t);
+  {$endif}
 {$endif}
   end;
 
