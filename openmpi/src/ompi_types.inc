@@ -1,6 +1,7 @@
 
 Type  
   pvaluint = ^valuint;
+  TArr2integer = array of array of integer;
   
   TMPI_Aint	= integer;
   PMPI_Aint	= ^TMPI_Aint;
@@ -18,6 +19,10 @@ Type
   PMPI_Group	= ^TMPI_Group;  
   PMPI_Info	= ^TMPI_Info;  
   PMPI_Datatype	= ^TMPI_Datatype;
+  PMPI_Request	= ^TMPI_Request;
+  PMPI_Status	= ^TMPI_Status;
+  PMPI_Errhandler = ^TMPI_Errhandler;
+  PMPI_Message	= ^TMPI_Message;
 
   Pompi_communicator_t = ^ompi_communicator_t;
   PPompi_communicator_t = ^Pompi_communicator_t;
@@ -39,15 +44,26 @@ Type
 
   {$I mca.inc}
   
+  ompi_message_t = packed record
+    super		: opal_free_list_item_t;
+    m_f_to_c_index	: integer;              
+    comm		: ^ompi_communicator_t; 
+    req_ptr		: Pointer;              
+    peer		: integer;              
+    count		: valuint;              
+  end;
+  TMPI_Message = ompi_message_t;
+
+  
   ompi_datatype_t = packed record
-    super: opal_datatype_t;
-    id: integer;
-    d_f_to_c_index: integer;
-    d_keyhash: Popal_hash_table_t;
-    args: pointer;
-    packed_description: pointer;
-    pml_data: QWord;
-    name: array[0..MPI_MAX_OBJECT_NAME-1] of char;
+    super		: opal_datatype_t;
+    id			: integer;
+    d_f_to_c_index	: integer;
+    d_keyhash		: Popal_hash_table_t;
+    args		: pointer;
+    packed_description	: pointer;
+    pml_data		: QWord;
+    name		: array[0..MPI_MAX_OBJECT_NAME-1] of char;
   end;  
   TMPI_Datatype = ompi_datatype_t;
   
@@ -148,8 +164,10 @@ Type
   
   ompi_errhandler_generic_handler_fn_t = procedure(p1: pointer; p2: Pinteger; args: array of const);
   MPI_Comm_errhandler_function = procedure(p1: PMPI_Comm; p2: Pinteger; args: array of const); 
+  PMPI_Comm_errhandler_function = MPI_Comm_errhandler_function;
   ompi_file_errhandler_fn = procedure(p1: PMPI_File; p2: Pinteger; args: array of const);
   MPI_Win_errhandler_function = procedure(p1: PMPI_Win; p2: Pinteger; args: array of const);
+  PMPI_Win_errhandler_function = MPI_Win_errhandler_function;
   ompi_errhandler_fortran_handler_fn_t = procedure(p1: PMPI_Fint; p2: PMPI_Fint; args: array of const);
   ompi_errhandler_cxx_dispatch_fn_t = procedure(handle: pointer; err_code: Pinteger; const message: PChar; fn: ompi_errhandler_generic_handler_fn_t);
 

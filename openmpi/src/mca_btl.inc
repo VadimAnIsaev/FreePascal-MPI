@@ -98,21 +98,23 @@
     eend: Byte;
   end;
 
-// --- Независящие от других типов -------------------
-
   mca_btl_openib_module_pp_qp_t = packed record
     dummy: integer;
   end;
 
-  
+
+// --- Независящие от других типов -------------------
+
+{$I opal_event.inc}
+
   mca_btl_openib_module_srq_qp_t = packed record
-    srq: Pibv_srq;
-    rd_posted: integer;
-    sd_credits: integer;
-    pending_frags: array[0..1] of opal_list_t;
-    rd_curr_num: integer;
-    rd_low_local: integer;
-    srq_limit_event_flag: longbool;
+    srq				: Pibv_srq;
+    rd_posted			: integer;
+    sd_credits			: integer;
+    pending_frags		: array[0..1] of opal_list_t;
+    rd_curr_num			: integer;
+    rd_low_local		: integer;
+    srq_limit_event_flag	: longbool;
   end;
 
 
@@ -134,38 +136,38 @@
 
   
   mca_btl_openib_rem_info_t = packed record
-    rem_lid: Word;
-    rem_subnet_id: Word;
-    rem_mtu: Word;
-    rem_index: Word;
-    rem_qps: Pmca_btl_openib_rem_qp_info_t;
-    rem_srqs: Pmca_btl_openib_rem_srq_info_t;
-    rem_vendor_id: DWord;
-    rem_vendor_part_id: DWord;
-    rem_transport_type: mca_btl_openib_transport_type_t;
+    rem_lid		: Word;
+    rem_subnet_id	: Word;
+    rem_mtu		: Word;
+    rem_index		: Word;
+    rem_qps		: Pmca_btl_openib_rem_qp_info_t;
+    rem_srqs		: Pmca_btl_openib_rem_srq_info_t;
+    rem_vendor_id	: DWord;
+    rem_vendor_part_id	: DWord;
+    rem_transport_type	: mca_btl_openib_transport_type_t;
   end;
 
 
   mca_btl_openib_reg_t = packed record
     base: mca_rcache_base_registration_t;
-    mr: Pibv_mr;
-    btl_handle: mca_btl_base_registration_handle_t;
+    mr		: Pibv_mr;
+    btl_handle	: mca_btl_base_registration_handle_t;
   end;
   
   mca_btl_openib_in_frag_t = packed record
-    super: mca_btl_openib_frag_t;
-    sg_entry: ibv_sge;
-    registration: mca_btl_openib_reg_t;
-    endpoint: Pmca_btl_base_endpoint_t;
-    n_wqes_inflight: DWord;
+    super		: mca_btl_openib_frag_t;
+    sg_entry		: ibv_sge;
+    registration	: mca_btl_openib_reg_t;
+    endpoint		: Pmca_btl_base_endpoint_t;
+    n_wqes_inflight	: DWord;
   end;
   
   mca_btl_openib_recv_frag_t = packed record
-    super: mca_btl_openib_in_frag_t;
-    hdr: Pmca_btl_openib_header_t;
-    ftr: Pmca_btl_openib_footer_t;
-    rd_desc: ibv_recv_wr;
-    qp_idx: Byte;
+    super	: mca_btl_openib_in_frag_t;
+    hdr		: Pmca_btl_openib_header_t;
+    ftr		: Pmca_btl_openib_footer_t;
+    rd_desc	: ibv_recv_wr;
+    qp_idx	: Byte;
   end;
   
   mca_btl_openib_eager_rdma_local_t = packed record

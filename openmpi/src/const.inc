@@ -58,3 +58,5 @@ Const
     OMPI_OP_BASE_TYPE_LONG_DOUBLE_INT = 37;
     OMPI_OP_BASE_TYPE_WCHAR = 38;
     OMPI_OP_BASE_TYPE_MAX = 39;
+
+    _SIGSET_NWORDS = 1024 / (8 * sizeof (DWord));

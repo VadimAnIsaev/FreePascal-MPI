@@ -4,7 +4,7 @@ Unit mpi;
 
 interface
 
-Uses SysUtils;
+Uses {$IFDEF WINDOWS} Windows, {$ENDIF}SysUtils;
 
 Const
 {$IFDEF WINDOWS}  
@@ -16,6 +16,7 @@ Const
 {$I const.inc}
 
 {$I ompi_types.inc}
+{$I ompi_func.inc}
 
 
 implementation
