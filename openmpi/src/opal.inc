@@ -128,6 +128,27 @@
     addr: pointer;
   end;
   
+  ddt_elem_id_description = packed record
+    flags: Word;
+    typ: Word; 
+  end;
+  
+  Pdt_elem_desc_t = ^ddt_elem_desc_t;
+  ddt_elem_desc_t = packed record
+    common: ddt_elem_id_description;
+    blocklen: DWord;
+    count: valuint;   
+    extent: valuint;  
+    disp: valuint;    
+  end;
+  
+  opal_datatype_count_t = valuint;
+  dt_type_desc_t = packed record
+    length: opal_datatype_count_t;
+    used: opal_datatype_count_t;  
+    desc: Pdt_elem_desc_t;
+  end;
+
   opal_datatype_t = packed record
     super: opal_object_t;  
     flags: Word;  

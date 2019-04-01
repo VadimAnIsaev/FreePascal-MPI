@@ -1,5 +1,5 @@
-
-  mca_mpool_base_component_query_fn_t = function(const hints: PChar, priority: Pinteger; module: PPmca_mpool_base_module_t): integer;
+// -- mca-mpool --------------------------------------------------------
+  mca_mpool_base_component_query_fn_t = function(const hints: PChar; priority: Pinteger; module: PPmca_mpool_base_module_t): integer;
   
   mca_mpool_base_component_t = packed record
     mpool_version	: mca_base_component_t;        
@@ -26,4 +26,4 @@
     mpool_allocation_unit	: valuint; 
     mpool_name			: PChar;
   end;
-  
+// -- mca-mpool --------------------------------------------------------  
