@@ -44,6 +44,7 @@ Type
 
   {$I mca.inc}
   
+  
   ompi_message_t = packed record
     super		: opal_free_list_item_t;
     m_f_to_c_index	: integer;              
@@ -364,3 +365,46 @@ Type
   end;
   TMPI_Comm = ompi_communicator_t;
   
+Const
+  PREDEFINED_COMMUNICATOR_PAD = 512;
+
+Type  
+  ompi_predefined_communicator_t = packed record
+    comm: ompi_communicator_t;
+    padding: array[0..PREDEFINED_COMMUNICATOR_PAD - sizeof(ompi_communicator_t) - 1] of Char;
+  end;
+  
+  
+  MPI_Comm_copy_attr_function = function(p1: TMPI_Comm; p2: integer; p3: Pointer; p4: Pointer; p5: Pointer; p6: Pinteger): integer;
+  PMPI_Comm_copy_attr_function = MPI_Comm_copy_attr_function;
+  MPI_Comm_delete_attr_function= function(p1: TMPI_Comm; p2: integer; p3: Pointer; p4: Pointer): integer;
+  PMPI_Comm_delete_attr_function = MPI_Comm_delete_attr_function;
+  MPI_Copy_function= function(p1: TMPI_Comm; p2: integer; p3: Pointer; p4: Pointer; p5: Pointer; p6: Pinteger ): integer;
+  PMPI_Copy_function = MPI_Copy_function;
+  MPI_Datarep_conversion_function= function(p1: Pointer; p2: TMPI_Datatype; p3: integer; p4: Pointer; p5: TMPI_Offset; p6: Pointer): integer;
+  PMPI_Datarep_conversion_function = MPI_Datarep_conversion_function;
+  MPI_Datarep_extent_function= function(p1: TMPI_Datatype; p2: PMPI_Aint; p3: Pointer): integer;
+  PMPI_Datarep_extent_function = MPI_Datarep_extent_function;
+  MPI_Delete_function= function(p1: TMPI_Comm; p2: integer; p3: Pointer; p4: Pointer ): integer;
+  PMPI_Delete_function = MPI_Delete_function;
+  MPI_File_errhandler_function= procedure( p1: PMPI_File; p2: Pinteger; args: array of const );
+  PMPI_File_errhandler_function = MPI_File_errhandler_function;
+  MPI_Grequest_cancel_function= function(p1: Pointer; p2: integer ): integer; 
+  PMPI_Grequest_cancel_function = MPI_Grequest_cancel_function;
+  MPI_Grequest_free_function= function(p: Pointer): integer; 
+  PMPI_Grequest_free_function = MPI_Grequest_free_function;
+  MPI_Grequest_query_function= function(p1: Pointer; p2: PMPI_Status): integer; 
+  PMPI_Grequest_query_function = MPI_Grequest_query_function;
+  MPI_Handler_function= procedure( p1: PMPI_Comm; p2: Pinteger; args: array of const );
+  PMPI_Handler_function = MPI_Handler_function;
+  MPI_Type_copy_attr_function= function(p1: TMPI_Datatype; p2: integer; p3: Pointer; p4: Pointer; p5: Pointer; p6: Pinteger): integer;
+  PMPI_Type_copy_attr_function = MPI_Type_copy_attr_function;
+  MPI_Type_delete_attr_function= function(p1: TMPI_Datatype; p2: integer; p3: Pointer; p4: Pointer): integer;
+  PMPI_Type_delete_attr_function = MPI_Type_delete_attr_function;
+  PMPI_User_function = MPI_User_function;
+  MPI_Win_copy_attr_function= function(p1: TMPI_Win; p2: integer; p3: Pointer; p4: Pointer; p5: Pointer; p6: Pinteger): integer;
+  PMPI_Win_copy_attr_function = MPI_Win_copy_attr_function;
+  MPI_Win_delete_attr_function= function(p1: TMPI_Win; p2: integer; p3: Pointer; p4: Pointer): integer;
+  PMPI_Win_delete_attr_function = MPI_Win_delete_attr_function;
+
+

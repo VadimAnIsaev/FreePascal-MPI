@@ -1,4 +1,8 @@
 Const
+{  MPI_COMM_NULL = 2;
+  MPI_COMM_SELF = 1;
+  MPI_COMM_WORLD = TMPI_Comm(0);}
+  
   MPI_MAX_OBJECT_NAME = 64;
   
   MCA_BASE_MAX_TYPE_NAME_LEN = 31;
