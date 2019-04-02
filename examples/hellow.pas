@@ -1,3 +1,4 @@
+{$mode objfpc}
 Uses mpi;
 
 Var
