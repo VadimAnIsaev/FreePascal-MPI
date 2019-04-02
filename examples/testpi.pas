@@ -1,5 +1,5 @@
 {$mode objfpc}
-Uses mpich;
+Uses mpi;
 
 function f(a: double): double;
 Begin
