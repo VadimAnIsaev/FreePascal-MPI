@@ -1,4 +1,4 @@
-﻿function PMPI_Send(const buf: Pointer; count: integer; datatype: TMPI_Datatype; dest: integer; tag: integer; comm: TMPI_Comm): integer; cdecl; external LIBMPI name 'PMPI_Send';
+function PMPI_Send(const buf: Pointer; count: integer; datatype: TMPI_Datatype; dest: integer; tag: integer; comm: TMPI_Comm): integer; cdecl; external LIBMPI name 'PMPI_Send';
 function PMPI_Recv(buf: Pointer; count: integer; datatype: TMPI_Datatype; source: integer; tag: integer; comm: TMPI_Comm; status: PMPI_Status): integer; cdecl; external LIBMPI name 'PMPI_Recv';
 function PMPI_Get_count(const status: PMPI_Status; datatype: TMPI_Datatype; count: Pinteger): integer; cdecl; external LIBMPI name 'PMPI_Get_count';
 function PMPI_Bsend(const buf: Pointer; count: integer; datatype: TMPI_Datatype; dest: integer; tag: integer; comm: TMPI_Comm): integer; cdecl; external LIBMPI name 'PMPI_Bsend';
