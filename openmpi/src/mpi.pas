@@ -13,15 +13,17 @@ Const
   LIBMPI = 'mpi';
 {$ENDIF}
 
-{$I const.inc}
+{$I ompi_consts.inc}
+{$I ompi_consts2.inc}
 {$I ompi_types.inc}
 {$I ompi_func.inc}
 
 Var
   MPI_COMM_WORLD: TMPI_Comm;
+  MPI_COMM_SELF: TMPI_Comm;
 
 implementation
 
-
+Begin
 
 end.
