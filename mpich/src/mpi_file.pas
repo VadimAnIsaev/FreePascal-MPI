@@ -39,7 +39,7 @@ Const
 
   MPI_DISPLACEMENT_CURRENT	= -54278278;
   
-  MPI_FILE_NULL			= PMPI_File(NIL);
+  MPI_FILE_NULL			= PMPI_File(0);
 
 Type
   ADIO_Offset = valsint;
@@ -105,6 +105,7 @@ Type
 	listio_read : integer;
 	listio_write: integer;
   end ;
+
   Tpvfs2 = packed record
 	debugmask   : integer;
 	posix_read  : integer;
@@ -114,16 +115,19 @@ Type
 	dtype_read  : integer;
 	dtype_write : integer;
   end ;
+
   Tlustre = packed record
         start_iodevice: integer;
         co_ratio      : integer;
         coll_threshold: integer;
         ds_in_coll    : integer;
   end ;
+
   Txfs = packed record
 	read_chunk_sz : longword; 
 	write_chunk_sz: longword; 
   end ;
+
   Tbg = packed record
       bridgelist   : Pinteger; 
       bridgelistnum: Pinteger; 
@@ -282,8 +286,6 @@ Type
   function MPI_Register_datarep(const datarep: PChar; read_conversion_fn: PMPI_Datarep_conversion_function; write_conversion_fn: PMPI_Datarep_conversion_function; dtype_file_extent_fn: PMPI_Datarep_extent_function; extra_state: Pointer): integer; cdecl; external LIBMPI name 'MPI_Register_datarep';
   function MPI_File_f2c(fh: TMPI_Fint): PMPI_File; cdecl; external LIBMPI name 'MPI_File_f2c';
   function MPI_File_c2f(fh: PMPI_File): TMPI_Fint; cdecl; external LIBMPI name 'MPI_File_c2f';
-  function MPI_Info_c2f(info: TMPI_Info): TMPI_Fint; cdecl; external LIBMPI name 'MPI_Info_c2f';
-  function MPI_Info_f2c(info: TMPI_Fint): TMPI_Info; cdecl; external LIBMPI name 'MPI_Info_f2c';
 
 implementation
 

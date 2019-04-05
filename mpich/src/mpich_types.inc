@@ -66,13 +66,13 @@ Type
   TMPI_F08_Status = MPI_F08_Status;
   PMPI_F08_Status = ^MPI_F08_Status;
 
-  TArrInteger = array of Integer;
-  TArr2Integer = array of array of Integer;
-  TArrMPI_Aint = array of TMPI_Aint;
-  TArrMPI_Datatype = array of TMPI_Datatype;
-  TArrMPI_Info = array of TMPI_Info;
-  TArrMPI_Request = array of TMPI_Request;
-  TArrMPI_Status = array of TMPI_Status;
+  TArrInteger3		= array[0..2] of Integer;
+  TArr2Integer		= array of array of TArrInteger3;
+  TArrMPI_Aint		= array of TMPI_Aint;
+  TArrMPI_Datatype 	= array of TMPI_Datatype;
+  TArrMPI_Info 		= array of TMPI_Info;
+  TArrMPI_Request	= array of TMPI_Request;
+  TArrMPI_Status	= array of TMPI_Status;
 
 
   MPI_Handler_function		= procedure( p1: PMPI_Comm; p2: Pinteger; args: array of const );

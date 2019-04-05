@@ -24,15 +24,13 @@ interface
 
 Const
 {$IFDEF WINDOWS}  
-  LIBMPI = 'msmpi.dll';
+  LIBMPI = 'msmpi.dll';		// MPICH from Microsoft
 {$ELSE}
   LIBMPI = 'mpich';
 {$ENDIF}
 
 {$I mpich_types.inc}
-
 {$I mpich_consts.inc}
-
 {$I mpich_mpi_func.inc}
 
 implementation
