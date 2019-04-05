@@ -1,0 +1,3 @@
+Const
+  MPI_STATUS_IGNORE = PMPI_Status(0);
+  MPI_STATUSES_IGNORE = PMPI_Status(0);

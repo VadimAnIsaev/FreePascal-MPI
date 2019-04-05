@@ -17,6 +17,7 @@ Const
 {$I ompi_consts2.inc}
 {$I ompi_types.inc}
 {$I ompi_func.inc}
+{$I ompi_consts_typed.inc}
 
 Var
   MPI_COMM_WORLD: TMPI_Comm;
