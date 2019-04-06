@@ -26,7 +26,7 @@ Const
 {$IFDEF WINDOWS}  
   LIBMPI = 'msmpi.dll';		// MPICH from Microsoft
 {$ELSE}
-  LIBMPI = 'mpich';
+  LIBMPI = 'mpi';
 {$ENDIF}
 
 {$I mpich_types.inc}
