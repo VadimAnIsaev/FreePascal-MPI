@@ -1,6 +1,6 @@
 # FreePascal-MPI
 Headers of MPI (MPICH and OpenMPI) for FreePascal.
-------------------------------
+
 ## MPICH
 Ready for testing.
 Changes:
