@@ -15,5 +15,7 @@ Changes:
 30.09.2019.
 
 The unit is compiling. In testing.
+
 Function "MPI_File*" do not work correctly. Reason - the structure "ompi_file_t" is not fully defined. 
+
 Structures related to "Infiniband" are temporarily undefined.
