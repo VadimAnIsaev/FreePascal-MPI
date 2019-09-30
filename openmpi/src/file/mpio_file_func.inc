@@ -1,0 +1,10 @@
+function MPIO_Test(request: PMPIO_Request; flag: Pinteger; status: PMPI_Status): integer; cdecl; external LIBMPI name 'MPIO_Test';
+function MPIO_Testall(count: integer; array_of_requests: array of TMPIO_Request; flag: Pinteger; array_of_statuses: array of TMPI_Status): integer; cdecl; external LIBMPI name 'MPIO_Testall';
+function MPIO_Testany(count: integer; array_of_requests: array of TMPIO_Request; indx: Pinteger; flag: Pinteger; status: PMPI_Status): integer; cdecl; external LIBMPI name 'MPIO_Testany';
+function MPIO_Testsome(incount: integer; array_of_requests: array of TMPIO_Request; outcount: Pinteger; array_of_indices: array of integer; array_of_statuses: array of TMPI_Status): integer; cdecl; external LIBMPI name 'MPIO_Testsome';
+function MPIO_Wait(request: PMPIO_Request; status: PMPI_Status): integer; cdecl; external LIBMPI name 'MPIO_Wait';
+function MPIO_Waitall(count: integer; array_of_requests: array of TMPIO_Request; array_of_statuses: array of TMPI_Status): integer; cdecl; external LIBMPI name 'MPIO_Waitall';
+function MPIO_Waitany(count: integer; array_of_requests: array of TMPIO_Request; indx: Pinteger; status: PMPI_Status): integer; cdecl; external LIBMPI name 'MPIO_Waitany';
+function MPIO_Waitsome(incount: integer; array_of_requests: array of TMPIO_Request; outcount: Pinteger; array_of_indices: array of integer; array_of_statuses: array of TMPI_Status): integer; cdecl; external LIBMPI name 'MPIO_Waitsome';
+function MPIO_Request_c2f(request: TMPIO_Request): TMPI_Fint; cdecl; external LIBMPI name 'MPIO_Request_c2f';
+function MPIO_Request_f2c(request: TMPI_Fint): TMPIO_Request; cdecl; external LIBMPI name 'MPIO_Request_f2c';

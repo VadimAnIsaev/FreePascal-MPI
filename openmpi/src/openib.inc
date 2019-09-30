@@ -1,7 +1,23 @@
+Const
+  IBV_SYSFS_NAME_MAX = 64;
+  IBV_SYSFS_PATH_MAX = 256;
+  
+Type  
   Pibv_context = ^ibv_context;
   Pibv_device = ^ibv_device;
+  Pibv_srq = ^ibv_srq;
   Pibv_mw = ^ibv_mw;
+  Pibv_pd = ^ibv_pd;
+  Pibv_cq = ^ibv_cq;
+  Pibv_wc = ^ibv_wc;
+  Pibv_recv_wr = ^ibv_recv_wr;
+  PPibv_recv_wr = ^Pibv_recv_wr;
 
+  ibv_mw_type = (
+	IBV_MW_TYPE_1 = 1,
+	IBV_MW_TYPE_2 = 2
+  );
+  
   ibv_context_ops = packed record
 	_compat_query_device = procedure();
 	_compat_query_port = function(context: Pibv_context; port_num: Word; port_attr: P_compat_ibv_port_attr): integer;
@@ -10,125 +26,116 @@
 	_compat_reg_mr = procedure();
 	_compat_rereg_mr = procedure();
 	_compat_dereg_mr = procedure(void);
-	alloc_mw = function(pd: Pibv_pd; type: enum ibv_mw_type): Pibv_mw;
-	bind_mw = function(struct ibv_qp *qp, struct ibv_mw *mw,
-					   struct ibv_mw_bind *mw_bind): integer;
-	int			(*dealloc_mw)(struct ibv_mw *mw);
-	void *(*_compat_create_cq)(void);
-	int			(*poll_cq)(struct ibv_cq *cq, int num_entries, struct ibv_wc *wc);
-	int			(*req_notify_cq)(struct ibv_cq *cq, int solicited_only);
-	void *(*_compat_cq_event)(void);
-	void *(*_compat_resize_cq)(void);
-	void *(*_compat_destroy_cq)(void);
-	void *(*_compat_create_srq)(void);
-	void *(*_compat_modify_srq)(void);
-	void *(*_compat_query_srq)(void);
-	void *(*_compat_destroy_srq)(void);
-	int			(*post_srq_recv)(struct ibv_srq *srq,
-						 struct ibv_recv_wr *recv_wr,
-						 struct ibv_recv_wr **bad_recv_wr);
-	void *(*_compat_create_qp)(void);
-	void *(*_compat_query_qp)(void);
-	void *(*_compat_modify_qp)(void);
-	void *(*_compat_destroy_qp)(void);
-	int			(*post_send)(struct ibv_qp *qp, struct ibv_send_wr *wr,
-					     struct ibv_send_wr **bad_wr);
-	int			(*post_recv)(struct ibv_qp *qp, struct ibv_recv_wr *wr,
-					     struct ibv_recv_wr **bad_wr);
-	void *(*_compat_create_ah)(void);
-	void *(*_compat_destroy_ah)(void);
-	void *(*_compat_attach_mcast)(void);
-	void *(*_compat_detach_mcast)(void);
-	void *(*_compat_async_event)(void);
+	alloc_mw = function(pd: Pibv_pd; type: ibv_mw_type): Pibv_mw;
+	bind_mw = function(qp: Pibv_qp; mw: Pibv_mw; mw_bind: Pibv_mw_bind): integer;
+	dealloc_mw = function(mw: Pibv_mw): integer;
+	_compat_create_cq = procedure();
+	poll_cq = function(cq: Pibv_cq; num_entries: integer; wc: Pibv_wc): integer;
+	req_notify_cq = function(cq: Pibv_cq; solicited_only: integer): integer;
+	_compat_cq_event = procedure();
+	_compat_resize_cq = procedure();
+	_compat_destroy_cq = procedure();
+	_compat_create_srq = procedure();
+	_compat_modify_srq = procedure();
+	_compat_query_srq = procedure();
+	_compat_destroy_srq = procedure();
+	post_srq_recv = function(srq: Pibv_srq; recv_wr: Pibv_recv_wr; bad_recv_wr: PPibv_recv_wr): integer;
+	_compat_create_qp = procedure();
+	_compat_query_qp = procedure();
+	_compat_modify_qp = procedure();
+	_compat_destroy_qp = procedure();
+	post_send = function(qp: Pibv_qp; wr: Pibv_send_wr; bad_wr: PPibv_send_wr): integer;
+	post_recv = function(qp: Pibv_qp; wr: Pibv_recv_wr; bad_wr: PPibv_recv_wr): integer;
+	_compat_create_ah = procedure();
+	_compat_destroy_ah = procedure();
+	_compat_attach_mcast = procedure();
+	_compat_detach_mcast = procedure();
+	_compat_async_event = procedure();
   end;
 
-
   ibv_context = packed record
-	device: Pibv_device;
-	ops: ibv_context_ops;
-	cmd_fd: integer;
-	async_fd: integer;
-	num_comp_vectors: integer;
-	mutex: pthread_mutex_t;
-	abi_compat: pointer;
+	device			: Pibv_device;
+	ops			: ibv_context_ops;
+	cmd_fd			: integer;
+	async_fd		: integer;
+	num_comp_vectors	: integer;
+	mutex			: pthread_mutex_t;
+	abi_compat		: pointer;
   end;
 
   ibv_srq = packed record
-    context: Pibv_context;
-    srq_context: pointer;
-    pd: Pibv_pd;
-    handle: DWord;
-    mutex: pthread_mutex_t;
-    cond: pthread_cond_t;
-    events_completed: DWord;
+    context		: Pibv_context;
+    srq_context		: pointer;
+    pd			: Pibv_pd;
+    handle		: DWord;
+    mutex		: pthread_mutex_t;
+    cond		: pthread_cond_t;
+    events_completed	: DWord;
   end;
 
   ibv_mr = packed record
-	struct ibv_context     *context;
-	struct ibv_pd	       *pd;
-	void		       *addr;
-	size_t			length;
-	uint32_t		handle;
-	uint32_t		lkey;
-	uint32_t		rkey;
+	context: Pibv_context;
+	pd: Pibv_pd;
+	addr: pointer;
+	length: valuint;
+	handle: integer;
+	lkey: integer;
+	rkey: integer;
   end;
 
   ibv_sge = packed record
-	uint64_t		addr;
-	uint32_t		length;
-	uint32_t		lkey;
+	addr: QWord;
+	length: DWord;
+	lkey: DWord;
   end;
 
   ibv_recv_wr = packed record
-	uint64_t		wr_id;
-	struct ibv_recv_wr     *next;
-	struct ibv_sge	       *sg_list;
-	int			num_sge;
+	wr_id: QWord;
+	next: Pibv_recv_wr;
+	sg_list: Pibv_sge;
+	num_sge: integer;
   end;
 
   ibv_send_wr = packed record
 	uint64_t		wr_id;
-	struct ibv_send_wr     *next;
-	struct ibv_sge	       *sg_list;
+	ibv_send_wr     *next;
+	ibv_sge	       *sg_list;
 	int			num_sge;
 	enum ibv_wr_opcode	opcode;
 	unsigned int		send_flags;
-	/* When opcode is *_WITH_IMM: Immediate data in network byte order.
-	 * When opcode is *_INV: Stores the rkey to invalidate
-	 */
 	union {
 		__be32			imm_data;
 		uint32_t		invalidate_rkey;
 	};
 	union {
-		struct {
+		{
 			uint64_t	remote_addr;
 			uint32_t	rkey;
 		} rdma;
-		struct {
+		{
 			uint64_t	remote_addr;
 			uint64_t	compare_add;
 			uint64_t	swap;
 			uint32_t	rkey;
 		} atomic;
-		struct {
-			struct ibv_ah  *ah;
+		{
+			ibv_ah  *ah;
 			uint32_t	remote_qpn;
 			uint32_t	remote_qkey;
 		} ud;
 	} wr;
 	union {
-		struct {
+		{
 			uint32_t    remote_srqn;
 		} xrc;
 	} qp_type;
 	union {
-		struct {
-			struct ibv_mw	*mw;
+		{
+			ibv_mw	*mw;
 			uint32_t		rkey;
-			struct ibv_mw_bind_info	bind_info;
+			ibv_mw_bind_info	bind_info;
 		} bind_mw;
-		struct {
+		{
 			void		       *hdr;
 			uint16_t		hdr_sz;
 			uint16_t		mss;
@@ -137,17 +144,13 @@
   end;
 
   ibv_device = packed record
-	struct _ibv_device_ops	_ops;
-	enum ibv_node_type	node_type;
-	enum ibv_transport_type	transport_type;
-	/* Name of underlying kernel IB device, eg "mthca0" */
-	char			name[IBV_SYSFS_NAME_MAX];
-	/* Name of uverbs device, eg "uverbs0" */
-	char			dev_name[IBV_SYSFS_NAME_MAX];
-	/* Path to infiniband_verbs class device in sysfs */
-	char			dev_path[IBV_SYSFS_PATH_MAX];
-	/* Path to infiniband class device in sysfs */
-	char			ibdev_path[IBV_SYSFS_PATH_MAX];
+	_ops: _ibv_device_ops;
+	node_type: ibv_node_type;
+	transport_type: ibv_transport_type;
+	name: array[0..IBV_SYSFS_NAME_MAX-1] of char;
+	dev_name: array[0..IBV_SYSFS_NAME_MAX-1] of char;
+	dev_path: array[0..IBV_SYSFS_PATH_MAX-1] if char;
+	ibdev_path: array[0..IBV_SYSFS_PATH_MAX-1] of char;
   end;
 
   ibv_device_attr = packed record
@@ -194,13 +197,13 @@
   end;
 
   ibv_pd = packed record
-	struct ibv_context     *context;
-	uint32_t		handle;
+	context: Pibv_context;
+	handle: integer;
   end;
 
   ibv_cq = packed record
-	struct ibv_context     *context;
-	struct ibv_comp_channel *channel;
+	ibv_context     *context;
+	ibv_comp_channel *channel;
 	void		       *cq_context;
 	uint32_t		handle;
 	int			cqe;
@@ -210,6 +213,23 @@
 	uint32_t		async_events_completed;
   end;
 
+  ibv_port_state = (
+	IBV_PORT_NOP		= 0,
+	IBV_PORT_DOWN		= 1,
+	IBV_PORT_INIT		= 2,
+	IBV_PORT_ARMED		= 3,
+	IBV_PORT_ACTIVE		= 4,
+	IBV_PORT_ACTIVE_DEFER	= 5
+  );
+  
+  ibv_mtu = (
+	IBV_MTU_256  = 1,
+	IBV_MTU_512  = 2,
+	IBV_MTU_1024 = 3,
+	IBV_MTU_2048 = 4,
+	IBV_MTU_4096 = 5
+  );
+  
   ibv_port_attr = packed record
 	enum ibv_port_state	state;
 	enum ibv_mtu		max_mtu;

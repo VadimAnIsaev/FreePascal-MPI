@@ -4,11 +4,11 @@
   opal_btl_openib_connect_base_component_finalize_fn_t = function(): integer;
 
   opal_btl_openib_connect_base_component_t = packed record
-    cbc_name: array[0..BCF_MAX_NAME-1] of shortint;
-    cbc_register: opal_btl_openib_connect_base_component_register_fn_t;
-    cbc_init: opal_btl_openib_connect_base_component_init_fn_t;
-    cbc_query: opal_btl_openib_connect_base_func_component_query_t;
-    cbc_finalize: opal_btl_openib_connect_base_component_finalize_fn_t;
+    cbc_name			: array[0..BCF_MAX_NAME-1] of shortint;
+    cbc_register		: opal_btl_openib_connect_base_component_register_fn_t;
+    cbc_init			: opal_btl_openib_connect_base_component_init_fn_t;
+    cbc_query			: opal_btl_openib_connect_base_func_component_query_t;
+    cbc_finalize		: opal_btl_openib_connect_base_component_finalize_fn_t;
   end;
   
   opal_btl_openib_connect_base_module_data_t = packed record
@@ -73,10 +73,10 @@
   end;
 
   opal_bitmap_t = packed record
-    super: opal_object_t;      
-    bitmap: ^QWord;     
-    array_size: integer; 
-    max_size: integer;   
+    super	: opal_object_t;      
+    bitmap	: ^QWord;     
+    array_size	: integer; 
+    max_size	: integer;   
   end;
   
   Tu = packed record
@@ -92,8 +92,8 @@
 
   _pthread_descr = pointer;
   _pthread_fastlock = record
-    __status : longint;
-    __spinlock : longint;
+    __status		: longint;
+    __spinlock		: longint;
   end;
 
 
@@ -117,61 +117,61 @@
   end;
   
   opal_pointer_array_t = packed record
-    super: opal_object_t;
-    lock: opal_mutex_t;
-    lowest_free: integer;
-    number_free: integer;
-    size: integer;
-    max_size: integer;
-    block_size: integer;
-    free_bits: ^QWord;
-    addr: pointer;
+    super		: opal_object_t;
+    lock		: opal_mutex_t;
+    lowest_free		: integer;
+    number_free		: integer;
+    size		: integer;
+    max_size		: integer;
+    block_size		: integer;
+    free_bits		: ^QWord;
+    addr		: pointer;
   end;
   
   ddt_elem_id_description = packed record
-    flags: Word;
-    typ: Word; 
+    flags		: Word;
+    typ			: Word; 
   end;
   
   Pdt_elem_desc_t = ^ddt_elem_desc_t;
   ddt_elem_desc_t = packed record
-    common: ddt_elem_id_description;
-    blocklen: DWord;
-    count: valuint;   
-    extent: valuint;  
-    disp: valuint;    
+    common		: ddt_elem_id_description;
+    blocklen		: DWord;
+    count		: valuint;   
+    extent		: valuint;  
+    disp		: valuint;    
   end;
   
   opal_datatype_count_t = valuint;
   dt_type_desc_t = packed record
-    length: opal_datatype_count_t;
-    used: opal_datatype_count_t;  
-    desc: Pdt_elem_desc_t;
+    length		: opal_datatype_count_t;
+    used		: opal_datatype_count_t;  
+    desc		: Pdt_elem_desc_t;
   end;
 
   opal_datatype_t = packed record
-    super: opal_object_t;  
-    flags: Word;  
-    id: Word;     
-    bdt_used: DWord;
-    size: valuint;
-    true_lb: valuint;
-    true_ub: valuint;
-    lb: valuint;
-    ub: valuint;
-    nbElems: valuint;
-    align: DWord;
-    loops: DWord;
-    name: array[0..OPAL_MAX_OBJECT_NAME-1] of char;
-    desc: dt_type_desc_t;
-    opt_desc: dt_type_desc_t;
-    ptypes: Pvaluint;
+    super		: opal_object_t;  
+    flags		: Word;  
+    id			: Word;     
+    bdt_used		: DWord;
+    size		: valuint;
+    true_lb		: valuint;
+    true_ub		: valuint;
+    lb			: valuint;
+    ub			: valuint;
+    nbElems		: valuint;
+    align		: DWord;
+    loops		: DWord;
+    name		: array[0..OPAL_MAX_OBJECT_NAME-1] of char;
+    desc		: dt_type_desc_t;
+    opt_desc		: dt_type_desc_t;
+    ptypes		: Pvaluint;
   end;
   
   
   Tptr = packed record
-    key		: Pointer;
-    key_size	: valuint;
+    key			: Pointer;
+    key_size		: valuint;
   end;
   
   Tkey = packed record
@@ -237,8 +237,8 @@
   opal_free_list_item_init_fn_t = function(item: Popal_free_list_item_t; ctx: pointer): integer;
 
   Topaldata = packed record
-     counter: QWord;
-     item: Popal_list_item_t;
+     counter		: QWord;
+     item		: Popal_list_item_t;
   end;
 
   opal_int128_t = int128rec;
@@ -258,36 +258,36 @@
 
   
   opal_lifo_t = packed record
-    super: opal_object_t;
-    opal_lifo_head: opal_counted_pointer_t;
-    opal_lifo_ghost: opal_list_item_t;
+    super		: opal_object_t;
+    opal_lifo_head	: opal_counted_pointer_t;
+    opal_lifo_ghost	: opal_list_item_t;
   end;
 
   opal_condition_t = packed record
-    super: opal_object_t;
-    c_waiting: integer;
-    c_signaled: integer;
+    super		: opal_object_t;
+    c_waiting		: integer;
+    c_signaled		: integer;
   end;
   
   opal_free_list_t = packed record
-    super: opal_lifo_t ;
-    fl_max_to_alloc: valuint;
-    fl_num_allocated: valuint;
-    fl_num_per_alloc: valuint;
-    fl_num_waiting: valuint;
-    fl_frag_size: valuint;
-    fl_frag_alignment: valuint;
+    super		: opal_lifo_t ;
+    fl_max_to_alloc	: valuint;
+    fl_num_allocated	: valuint;
+    fl_num_per_alloc	: valuint;
+    fl_num_waiting	: valuint;
+    fl_frag_size	: valuint;
+    fl_frag_alignment	: valuint;
     fl_payload_buffer_size: valuint;
     fl_payload_buffer_alignment: valuint;
-    fl_frag_class: Popal_class_t;
-    fl_mpool: Pmca_mpool_base_module_t;
-    fl_rcache: Pmca_rcache_base_module_t;
-    fl_lock: opal_mutex_t;
-    fl_condition: opal_condition_t;
-    fl_allocations: opal_list_t;
-    fl_rcache_reg_flags: integer;
-    item_init: opal_free_list_item_init_fn_t;
-    ctx: Pointer;
+    fl_frag_class	: Popal_class_t;
+    fl_mpool		: Pmca_mpool_base_module_t;
+    fl_rcache		: Pmca_rcache_base_module_t;
+    fl_lock		: opal_mutex_t;
+    fl_condition	: opal_condition_t;
+    fl_allocations	: opal_list_t;
+    fl_rcache_reg_flags	: integer;
+    item_init		: opal_free_list_item_init_fn_t;
+    ctx			: Pointer;
   end;  
   
   opal_jobid_t = DWord;

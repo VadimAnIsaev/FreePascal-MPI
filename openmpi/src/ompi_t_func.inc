@@ -1,14 +1,55 @@
 Type
-  TMPI_T_cvar_handle
-  TMPI_T_enum
-  TMPI_T_pvar_handle
-  TMPI_T_pvar_session
+  mca_base_pvar_handle_t = packed record
+    super: opal_list_item_t;
+    list2		: opal_list_item_t;
+    session		: Pmca_base_pvar_session_t;
+    pvar		: mca_base_pvar_session_t;
+    obj_handle		: pointer;
+    count		: integer;
+    last_value		: pointer;
+    current_value	: pointer;
+    tmp_value		: pointer;
+    started		: longbool;
+  end;
+  
+  mca_base_pvar_session_t = packed record
+    super		: opal_object_t;
+    handles		: opal_list_t;
+  end;
+  
+  ompi_mpit_cvar_handle_t = packed record
+    var			: mca_base_var_t;
+    bound_object	: pointer;
+  end;
 
-  PMPI_T_cvar_handle
-  PMPI_T_enum
-  PMPI_T_pvar_handle
-  PMPI_T_pvar_session
+  mca_base_var_enum_t = packed record
+    super		: opal_object_t;
+    enum_is_static	: longbool;
+    enum_name		: PChar;
+    get_count		: mca_base_var_enum_get_count_fn_t;
+    get_value		: mca_base_var_enum_get_value_fn_t;
+    value_from_string	: mca_base_var_enum_vfs_fn_t;
+    string_from_value	: mca_base_var_enum_sfv_fn_t;
+    dump		: mca_base_var_enum_dump_fn_t;
+    enum_value_count	: integer;
+    enum_values		: Pmca_base_var_enum_value_t;
+  end;  
+  
+  TMPI_T_cvar_handle = ompi_mpit_cvar_handle_t;
+  TMPI_T_enum = mca_base_var_enum_t;
+  TMPI_T_pvar_handle = mca_base_pvar_handle_t;
+  TMPI_T_pvar_session = mca_base_pvar_session_t;
 
+  PMPI_T_cvar_handle = ^TMPI_T_cvar_handle;
+  PMPI_T_enum = ^TMPI_T_enum;
+  PMPI_T_pvar_handle = ^TMPI_T_pvar_handle;
+  PMPI_T_pvar_session = ^TMPI_T_pvar_session;
+
+Const
+  MPI_T_PVAR_ALL_HANDLES = MPI_T_pvar_handle(-1);
+  MPI_T_PVAR_HANDLE_NULL = MPI_T_pvar_handle(0);
+  MPI_T_PVAR_SESSION_NULL = MPI_T_pvar_session(0);
+  MPI_T_CVAR_HANDLE_NULL = MPI_T_cvar_handle(0);
 
 
 function MPI_T_init_thread (required: integer; provided: Pinteger): integer; cdecl; external LIBMPI name 'MPI_T_init_thread ';

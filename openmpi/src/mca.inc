@@ -46,7 +46,7 @@
 {$I mca_pml.inc}
     
   mca_base_module_2_0_0_t = packed record
-    dummy_value: integer;
+    dummy_value		: integer;
   end;
   
   mca_topo_base_component_init_query_2_2_0_fn_t = function(enable_progress_threads: longbool; enable_mpi_threads: longbool): integer;
@@ -156,3 +156,4 @@
     topo		: Ttopo;
     mtc			: mca_topo_base_comm_cgd_union_t;
   end;
+
