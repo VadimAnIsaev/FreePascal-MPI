@@ -11,4 +11,7 @@ Changes:
 - MPICH. Small changes to the headers of functions working with arrays. 04.04.2019.
 
 ## OpenMPI
-In work. Not ready.
+30.09.2019
+The unit is compiling. In testing.
+Function "MPI_File*" do not work correctly. Reason - is the structure "ompi_file_t" is not fully defined. 
+Structures related to "Infiniband" are temporarily undefined.
