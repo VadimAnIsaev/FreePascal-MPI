@@ -4,9 +4,11 @@ Headers of MPI (MPICH and OpenMPI) for FreePascal.
 ## MPICH
 Ready for testing.
 Changes:
-- MPICH. General function "MPI_*";
-- MPICH. Module for file functions\operations;
-- MPICH. Included file with redesined c-macros.
+- General function "MPI_*";
+- Module for file functions\operations;
+- Included file with redesined c-macros.
+--------------------------------------------------------
+- Functions for file manipulstions temporally not ready.
 
 04.04.2019.
 - MPICH. Small changes to the headers of functions working with arrays. 
