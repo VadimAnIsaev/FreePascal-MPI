@@ -1,8 +1,17 @@
 Const
+  OPEN_MPI            = 1;
+  
+  MPI_VERSION         = 3;
+  MPI_SUBVERSION      = 1;
+  
+  OMPI_MAJOR_VERSION  = 4;
+  OMPI_MINOR_VERSION  = 0;
+  OMPI_RELEASE_VERSION= 1;
+    
   MPI_ANY_SOURCE			= -1;
   MPI_PROC_NULL				= -2;                     
-  MPI_ROOT				= -4;                     
-  MPI_ANY_TAG				= -1;                     
+  MPI_ROOT				    = -4;                     
+  MPI_ANY_TAG				  = -1;                     
   MPI_MAX_PROCESSOR_NAME		= 256;
   MPI_MAX_ERROR_STRING			= 256;  
   MPI_MAX_OBJECT_NAME			= 64;   
