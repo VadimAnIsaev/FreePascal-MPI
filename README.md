@@ -12,6 +12,7 @@ Changes:
 
 04.04.2019.
 - MPICH. Small changes to the headers of functions working with arrays. 
+
 07.10.2019.
 - Insert "deprecated" for removed functions according to the standard MPI 3.1.
 ------------------------------
