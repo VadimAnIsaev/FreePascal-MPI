@@ -1,3 +1,8 @@
+  // Services constant for for constant conversion
+  MPI_COMM_WORLD_FORTRAN = Integer(0);
+  MPI_COMM_SELF_FORTRAN = Integer(1);
+  MPI_COMM_NULL_FORTRAN = Integer(2);
+  
   // Service constants for internal use
   MCA_BASE_MAX_TYPE_NAME_LEN = 31;
   MCA_BASE_MAX_PROJECT_NAME_LEN = 15;
