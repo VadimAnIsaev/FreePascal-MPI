@@ -2,7 +2,7 @@
 Headers of MPI (MPICH and OpenMPI) for FreePascal.
 
 ## MPICH
-Ready for testing.
+Version 3.3. Ready for testing.
 Changes:
 - General function "MPI_*";
 - Module for file functions\operations;
@@ -17,6 +17,7 @@ Changes:
 - Insert "deprecated" for removed functions according to the standard MPI 3.1.
 ------------------------------
 ## OpenMPI
+Version 4.0.1.  
 30.09.2019.
 
 The unit is compiling. In testing.
