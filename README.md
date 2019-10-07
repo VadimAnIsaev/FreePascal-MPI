@@ -4,14 +4,11 @@ Headers of MPI (MPICH and OpenMPI) for FreePascal.
 ## MPICH
 Version 3.3. Ready for testing.
 Changes:
-- General function "MPI_*";
-- Module for file functions\operations;
-- Included file with redesined c-macros.
---------------------------------------------------------
-- Functions for file manipulstions temporally not ready.
+- In main unit "mpi.pas" included only general function "MPI_*";
+- Functions for file manipulstions temporally not ready. Data structures for them are not yet ready.
 
 04.04.2019.
-- MPICH. Small changes to the headers of functions working with arrays. 
+- Small changes to the headers of functions working with arrays. 
 
 07.10.2019.
 - Insert "deprecated" for removed functions according to the standard MPI 3.1.
@@ -22,6 +19,5 @@ Version 4.0.1.
 
 The unit is compiling. In testing.
 
-Function "MPI_File*" do not work correctly. Reason - the structure "ompi_file_t" is not fully defined. 
-
-Structures related to "Infiniband" are temporarily undefined.
+- Function "MPI_File*" do not work correctly. Reason - the structure "ompi_file_t" is not fully defined. 
+- Structures related to "Infiniband" are temporarily undefined.
