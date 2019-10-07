@@ -1,7 +1,7 @@
 Compile this:
 
 > fpc hellow.pas 
->fpc testpi.pas 
+> fpc testpi.pas 
 
 Run this: 
 On Windows:
