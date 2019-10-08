@@ -265,7 +265,7 @@ Const
   MPI_LXOR = 9;         // logical xor
   MPI_MAXLOC = 11;      // max value and his location
   MPI_MINLOC = 12;      // min value and his location
-  
+  MPI_REPLACE = 13;
   MPI_NO_OP = 14;
 
   
