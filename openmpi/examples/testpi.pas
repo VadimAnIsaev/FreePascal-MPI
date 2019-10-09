@@ -18,19 +18,18 @@ Var
 
 
 Begin
-    MPI_Init(NIL, NIL);
-    MPI_COMM_WORLD := MPI_Comm_f2c(MPI_COMM_WORLD_Fortran);
+    MPI_Init2();
     MPI_Comm_size(MPI_COMM_WORLD, @numprocs);
     MPI_Comm_rank(MPI_COMM_WORLD, @myid);
-    MPI_Get_processor_name(@processor_name[1], @namelen);
+//    MPI_Get_processor_name(@processor_name[1], @namelen);
 
-    WriteLn('Process ', myid, ' of ', numprocs, ' is on ', processor_name);
+//    WriteLn('Process ', myid, ' of ', numprocs, ' is on ', processor_name);
 
     n := 100000000;  // default # of rectangles
     If myid = 0 Then
       startwtime := MPI_Wtime();
 
-    MPI_Bcast(@n, 1, MPI_Type_f2c(MPI_INT), 0, MPI_COMM_WORLD);
+    MPI_Bcast(@n, 1, MPI_INT, 0, MPI_COMM_WORLD);
 
     h := 1.0 / n;
     sum := 0.0;
@@ -44,12 +43,14 @@ Begin
     End;
     mypi := h * sum;
 
-    MPI_Reduce(@mypi, @pi, 1, MPI_Type_f2c(MPI_DOUBLE), MPI_Op_f2c(MPI_SUM), 0, MPI_COMM_WORLD);
+    MPI_Reduce(@mypi, @pi, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
 
     if myid = 0 Then 
     Begin
         endwtime := MPI_Wtime();
-        WriteLn('pi is approximately ', pi:18:16, '. Error is ', abs(pi - PI25DT):18:16);
+        WriteLn('pi is approximately ', pi:18:16); 
+        WriteLn('           Error is ', abs(pi - PI25DT):18:16);
+        WriteLn('pi const =          ', PI25DT:25:23);
         WriteLn('wall clock time = ', (endwtime - startwtime):10:3, ' sec.');
     End;
 
