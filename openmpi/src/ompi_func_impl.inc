@@ -19,7 +19,7 @@ Begin
   MPI_CHARACTER 	:= MPI_Type_f2c(MPI_CHARACTER_F);
   MPI_LOGICAL		:= MPI_Type_f2c(MPI_LOGICAL_F);
     
-  // Operation
+  // Operations
   MPI_MAX	:= MPI_Op_f2c(MPI_MAX_F);
   MPI_MIN	:= MPI_Op_f2c(MPI_MIN_F);
   MPI_SUM	:= MPI_Op_f2c(MPI_SUM_F);
