@@ -325,3 +325,7 @@ function MPI_Request_c2f(request: PMPI_Request): TMPI_FInt; cdecl; external LIBM
 function MPI_Status_c2f(const c_status: PMPI_Status; f_status: TMPI_FInt): integer; cdecl; external LIBMPI name 'MPI_Status_c2f';
 function MPI_Type_c2f(datatype: PMPI_Datatype): TMPI_FInt; cdecl; external LIBMPI name 'MPI_Type_c2f';
 function MPI_Win_c2f(win: PMPI_Win): TMPI_FInt; cdecl; external LIBMPI name 'MPI_Win_c2f';
+
+// Init MPI for FreePascal
+function MPI_Init2(): integer;
+function MPI_Init2_thread(required: integer; provided: Pinteger): integer;

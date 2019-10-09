@@ -36,12 +36,8 @@ Const
 {$I ompi_func.inc}
 {$I ompi_consts_typed.inc}
 
-Var
-  MPI_COMM_WORLD: TMPI_Comm;
-  MPI_COMM_SELF: TMPI_Comm;
-
 implementation
 
-Begin
+{$I ompi_func_impl.inc}
 
 end.

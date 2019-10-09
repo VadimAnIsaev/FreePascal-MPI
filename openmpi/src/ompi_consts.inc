@@ -8,10 +8,15 @@ Const
   OMPI_MINOR_VERSION  = 0;
   OMPI_RELEASE_VERSION= 1;
     
-  MPI_COMM_NULL_FORTRAN = 2;
-  MPI_COMM_SELF_FORTRAN = 1;
-  MPI_COMM_WORLD_FORTRAN= 0;
+  MPI_COMM_NULL_F = 2;
+  MPI_COMM_SELF_F = 1;
+  MPI_COMM_WORLD_F= 0;
 
+  MPI_ARGC_NULL		= PInteger(0);
+  MPI_ARGV_NULL		= NIL;
+  MPI_ARGVS_NULL	= NIL;
+ 
+  
   
   MPI_ANY_SOURCE			= -1;
   MPI_PROC_NULL				= -2;                     
@@ -33,8 +38,6 @@ Const
   MPI_BSEND_OVERHEAD			= 128;
   MPI_MAX_INFO_KEY			= 36;
   MPI_MAX_INFO_VAL			= 256;
-  MPI_ARGV_NULL				= NIL;
-  MPI_ARGVS_NULL			= NIL;
   MPI_ERRCODES_IGNORE			= Pinteger(0);
   MPI_MAX_PORT_NAME			= 1024;
 
@@ -73,15 +76,15 @@ Const
   MPI_LOCK_EXCLUSIVE			= 1;
   MPI_LOCK_SHARED			= 2;
 
-  MPI_WIN_FLAVOR_CREATE = 1;
-  MPI_WIN_FLAVOR_ALLOCATE = 2;
-  MPI_WIN_FLAVOR_DYNAMIC = 3;
-  MPI_WIN_FLAVOR_SHARED = 4;
+  MPI_WIN_FLAVOR_CREATE			= 1;
+  MPI_WIN_FLAVOR_ALLOCATE		= 2;
+  MPI_WIN_FLAVOR_DYNAMIC		= 3;
+  MPI_WIN_FLAVOR_SHARED			= 4;
 
-  MPI_WIN_UNIFIED = 0;
-  MPI_WIN_SEPARATE = 1;
+  MPI_WIN_UNIFIED			= 0;
+  MPI_WIN_SEPARATE			= 1;
 
-  MPI_COMM_TYPE_SHARED = 0;
+  MPI_COMM_TYPE_SHARED			= 0;
 
 
 // Error codes returned of functions
@@ -167,118 +170,135 @@ Const
   MPI_CONVERSION_FN_NULL = NIL;
   
   // Datatype
-  MPI_DATATYPE_NULL = 0;
+  MPI_DATATYPE_NULL_F = 0;
 
-  MPI_BYTE = 1;
-  MPI_CHARACTER = 5;
-  MPI_LOGICAL = 6;
-  MPI_INTEGER = 7;
-  MPI_REAL = 13;
-  MPI_DOUBLE_PRECISION = 17;
-  MPI_COMPLEX = 18;
-  MPI_DOUBLE = 46;
+  // C
+  MPI_CHAR_F = 34;
+  MPI_BYTE_F = 1;
+  MPI_SHORT_F = 37;
+  MPI_INT_F = 39;
+  MPI_LONG_F = 41;
+  MPI_LONG_LONG_INT_F = 43;
+  MPI_FLOAT_F = 45;
+  MPI_DOUBLE_F = 46;
 
-  MPI_2COMPLEX = 26;
-  MPI_2DOUBLE_COMPLEX = 27;
-  MPI_2DOUBLE_PRECISION = 24;
-  MPI_2INT = 52;
-  MPI_2INTEGER = 25;
-  MPI_2REAL = 23;
-  MPI_AINT = 66;
+  // Fortran
+  MPI_CHARACTER_F = 5;
+  MPI_LOGICAL_F = 6;
+  MPI_INTEGER_F = 7;
+  MPI_REAL_F = 13;
+  MPI_DOUBLE_PRECISION_F = 17;
+  MPI_COMPLEX_F = 18;
 
-  MPI_CHAR = 34;
-  
-  
-  MPI_COMPLEX8 = 19;
-  MPI_COMPLEX16 = 20;
-  MPI_COMPLEX32 = 21;
-  MPI_CXX_BOOL = 54;
-  MPI_CXX_COMPLEX = 55;
-  MPI_CXX_DOUBLE_COMPLEX = 56;
-  MPI_CXX_FLOAT_COMPLEX = 55;
-  MPI_CXX_LONG_DOUBLE_COMPLEX = 57;
-  MPI_C_BOOL = 68;
-  MPI_C_COMPLEX = 69;
-  MPI_C_DOUBLE_COMPLEX = 70;
-  MPI_C_FLOAT_COMPLEX = 69;
-  MPI_C_LONG_DOUBLE_COMPLEX = 71;
-  
-  MPI_DOUBLE_COMPLEX = 22;
-  MPI_DOUBLE_INT = 49;
-  
-  MPI_FLOAT = 45;
-  MPI_FLOAT_INT = 48;
-  MPI_INT = 39;
+  MPI_2COMPLEX_F = 26;
+  MPI_2DOUBLE_COMPLEX_F = 27;
+  MPI_2DOUBLE_PRECISION_F = 24;
+  MPI_2INT_F = 52;
+  MPI_2INTEGER_F = 25;
+  MPI_2REAL_F = 23;
+  MPI_AINT_F = 66;
 
-  MPI_INT8_T = 58;
-  MPI_INT16_T = 60;
-  MPI_INT32_T = 62;
-  MPI_INT64_T = 64;
-  MPI_UINT16_T = 61;
-  MPI_UINT32_T = 63;
-  MPI_UINT64_T = 65;
-  MPI_UINT8_T = 59;
+  
+    
+  MPI_COMPLEX8_F = 19;
+  MPI_COMPLEX16_F = 20;
+  MPI_COMPLEX32_F = 21;
+  
+  MPI_CXX_BOOL_F = 54;
+  MPI_CXX_COMPLEX_F = 55;
+  MPI_CXX_DOUBLE_COMPLEX_F = 56;
+  MPI_CXX_FLOAT_COMPLEX_F = 55;
+  MPI_CXX_LONG_DOUBLE_COMPLEX_F = 57;
+  MPI_C_BOOL_F = 68;
+  MPI_C_COMPLEX_F = 69;
+  MPI_C_DOUBLE_COMPLEX_F = 70;
+  MPI_C_FLOAT_COMPLEX_F = 69;
+  MPI_C_LONG_DOUBLE_COMPLEX_F = 71;
+  
+  MPI_DOUBLE_COMPLEX_F = 22;
+  MPI_DOUBLE_INT_F = 49;
   
   
-  MPI_INTEGER1 = 8;
-  MPI_INTEGER2 = 9;
-  MPI_INTEGER4 = 10;
-  MPI_INTEGER8 = 11;
-  MPI_INTEGER16 = 12;
+  MPI_FLOAT_INT_F = 48;
   
-  MPI_LOGICAL1 = 29;
-  MPI_LOGICAL2 = 30;
-  MPI_LOGICAL4 = 31;
-  MPI_LOGICAL8 = 32;
-  MPI_LONG = 41;
-  MPI_LONG_DOUBLE = 47;
-  MPI_LONG_DOUBLE_INT = 50;
-  MPI_LONG_INT = 51;
-  MPI_LONG_LONG = 43;
-  MPI_LONG_LONG_INT = 43;
+
+  MPI_INT8_T_F = 58;
+  MPI_INT16_T_F = 60;
+  MPI_INT32_T_F = 62;
+  MPI_INT64_T_F = 64;
+  MPI_UINT16_T_F = 61;
+  MPI_UINT32_T_F = 63;
+  MPI_UINT64_T_F = 65;
+  MPI_UINT8_T_F = 59;
   
-  MPI_REAL2 = 28;
-  MPI_REAL4 = 14;
-  MPI_REAL8 = 15;
-  MPI_REAL16 = 16;
-  MPI_SHORT = 37;
-  MPI_SHORT_INT = 53;
-  MPI_SIGNED_CHAR = 36;
-  MPI_UNSIGNED = 40;
-  MPI_UNSIGNED_CHAR = 35;
-  MPI_UNSIGNED_LONG = 42;
-  MPI_UNSIGNED_LONG_LONG = 44;
-  MPI_UNSIGNED_SHORT = 38;
-  MPI_WCHAR = 33;
+  
+  MPI_INTEGER1_F = 8;
+  MPI_INTEGER2_F = 9;
+  MPI_INTEGER4_F = 10;
+  MPI_INTEGER8_F = 11;
+  MPI_INTEGER16_F = 12;
+  
+  MPI_LOGICAL1_F = 29;
+  MPI_LOGICAL2_F = 30;
+  MPI_LOGICAL4_F = 31;
+  MPI_LOGICAL8_F = 32;
+  
+  MPI_LONG_DOUBLE_F = 47;
+  MPI_LONG_DOUBLE_INT_F = 50;
+  MPI_LONG_INT_F = 51;
+  MPI_LONG_LONG_F = 43;
+  
+  
+  MPI_REAL2_F = 28;
+  MPI_REAL4_F = 14;
+  MPI_REAL8_F = 15;
+  MPI_REAL16_F = 16;
+  
+  MPI_SHORT_INT_F = 53;
+  MPI_SIGNED_CHAR_F = 36;
+  MPI_UNSIGNED_F = 40;
+  MPI_UNSIGNED_CHAR_F = 35;
+  MPI_UNSIGNED_LONG_F = 42;
+  MPI_UNSIGNED_LONG_LONG_F = 44;
+  MPI_UNSIGNED_SHORT_F = 38;
+  MPI_WCHAR_F = 33;
 
 
   // Operations
-  MPI_MAX = 1;		// maximum
-  MPI_MIN = 2;		// minimum
-  MPI_SUM = 3;          // sum
-  MPI_PROD = 4;         // product
-  MPI_BAND = 6;         // bit-wise and
-  MPI_LAND = 5;         // logical and
-  MPI_BOR = 8;          // bit-wise or
-  MPI_LOR = 7;          // logical or
-  MPI_BXOR = 10;        // bit-wise xor
-  MPI_LXOR = 9;         // logical xor
-  MPI_MAXLOC = 11;      // max value and his location
-  MPI_MINLOC = 12;      // min value and his location
-  MPI_REPLACE = 13;
-  MPI_NO_OP = 14;
+  MPI_MAX_F = 1;	// maximum
+  MPI_MIN_F = 2;	// minimum
+  MPI_SUM_F = 3;          // sum
+  MPI_PROD_F = 4;         // product
+  MPI_BAND_F = 6;         // bit-wise and
+  MPI_LAND_F = 5;         // logical and
+  MPI_BOR_F = 8;          // bit-wise or
+  MPI_LOR_F = 7;          // logical or
+  MPI_BXOR_F = 10;        // bit-wise xor
+  MPI_LXOR_F = 9;         // logical xor
+  MPI_MAXLOC_F = 11;      // max value and his location
+  MPI_MINLOC_F = 12;      // min value and his location
+  MPI_REPLACE_F = 13;
+  MPI_NO_OP_F = 14;
 
   
 {
-  MPI_GROUP_EMPTY 1
-  MPI_GROUP_NULL 0
-  MPI_INFO_ENV 1
-  MPI_INFO_NULL 0
+  MPI_GROUP_EMPTY_F = 1;
+  MPI_GROUP_NULL_F = 0;
+  MPI_INFO_ENV_F = 1;
+  MPI_INFO_NULL_F = 0;
 
 
-  MPI_LB 4
-  MPI_ERRHANDLER_NULL 0
-  MPI_ERRORS_ARE_FATAL 1
-  MPI_ERRORS_RETURN 2
-  MPI_COUNT 72
+  MPI_LB_F = 4;
+  MPI_ERRHANDLER_NULL_F = 0;
+  MPI_COUNT_F = 72;
+  
+  MPI_ERRORS_ARE_FATAL_F = 1;
+  MPI_ERRORS_RETURN_F = 2;
+  
 }
+
+ // MPI_Init_thread constants
+  MPI_THREAD_SINGLE = 0;
+  MPI_THREAD_FUNNELED = 1;
+  MPI_THREAD_SERIALIZED = 2;
+  MPI_THREAD_MULTIPLE = 3;
