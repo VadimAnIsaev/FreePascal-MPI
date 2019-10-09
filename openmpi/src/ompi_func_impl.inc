@@ -51,6 +51,7 @@ Begin
   Result := MPI_Init_thread(MPI_ARGC_NULL, MPI_ARGV_NULL, required, provided);
   If Result = MPI_SUCCESS Then
   Begin
-
+    // Conversion
+    ConversionData();
   End;
 End;
