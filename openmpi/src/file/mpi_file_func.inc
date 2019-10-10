@@ -1,3 +1,6 @@
+{$I mca_io.inc}
+{$I mpi_file_const.inc}
+
 function MPI_File_call_errhandler(fh: PMPI_File; errorcode: integer): integer; cdecl; external LIBMPI name 'MPI_File_call_errhandler';
 function MPI_File_create_errhandler(fun: PMPI_File_errhandler_function; errhandler: PMPI_Errhandler): integer; cdecl; external LIBMPI name 'MPI_File_create_errhandler';
 function MPI_File_set_errhandler(fil: PMPI_File; errhandler: PMPI_Errhandler): integer; cdecl; external LIBMPI name 'MPI_File_set_errhandler';
