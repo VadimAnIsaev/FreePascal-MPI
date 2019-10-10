@@ -157,3 +157,8 @@
     mtc			: mca_topo_base_comm_cgd_union_t;
   end;
 
+  mca_io_base_version_t = (
+    MCA_IO_BASE_V_NONE,
+    MCA_IO_BASE_V_2_0_0,
+    MCA_IO_BASE_V_MAX
+  );

@@ -28,7 +28,7 @@ Type
   PMPI_Datatype		= ^TMPI_Datatype;
   MPI_Datatype		= PMPI_Datatype;
   PMPI_Request		= ^TMPI_Request;
-  MPI_Request		= MPI_Request;
+  MPI_Request		= PMPI_Request;
   PMPI_Status		= ^TMPI_Status;
   MPI_Status		= PMPI_Status;
   PMPI_Errhandler	= ^TMPI_Errhandler;
