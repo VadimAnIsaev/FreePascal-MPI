@@ -18,6 +18,8 @@ Type
 	IBV_MW_TYPE_2 = 2
   );
   
+  Pibv_context = ^ibv_context;
+  
   ibv_context_ops = packed record
 	_compat_query_device = procedure();
 	_compat_query_port = function(context: Pibv_context; port_num: Word; port_attr: P_compat_ibv_port_attr): integer;
@@ -97,12 +99,12 @@ Type
   end;
 
   ibv_send_wr = packed record
-	uint64_t		wr_id;
-	ibv_send_wr     *next;
-	ibv_sge	       *sg_list;
-	int			num_sge;
-	enum ibv_wr_opcode	opcode;
-	unsigned int		send_flags;
+	wr_id: QWord;
+	next: ^ibv_send_wr;
+	sg_list: ^ibv_sge;
+	num_sge: integer;
+	opcode: ibv_wr_opcode;
+	send_flags: DWord;
 	union {
 		__be32			imm_data;
 		uint32_t		invalidate_rkey;
@@ -154,46 +156,46 @@ Type
   end;
 
   ibv_device_attr = packed record
-	char			fw_ver[64];
-	__be64			node_guid;
-	__be64			sys_image_guid;
-	uint64_t		max_mr_size;
-	uint64_t		page_size_cap;
-	uint32_t		vendor_id;
-	uint32_t		vendor_part_id;
-	uint32_t		hw_ver;
-	int			max_qp;
-	int			max_qp_wr;
-	unsigned int		device_cap_flags;
-	int			max_sge;
-	int			max_sge_rd;
-	int			max_cq;
-	int			max_cqe;
-	int			max_mr;
-	int			max_pd;
-	int			max_qp_rd_atom;
-	int			max_ee_rd_atom;
-	int			max_res_rd_atom;
-	int			max_qp_init_rd_atom;
-	int			max_ee_init_rd_atom;
-	enum ibv_atomic_cap	atomic_cap;
-	int			max_ee;
-	int			max_rdd;
-	int			max_mw;
-	int			max_raw_ipv6_qp;
-	int			max_raw_ethy_qp;
-	int			max_mcast_grp;
-	int			max_mcast_qp_attach;
-	int			max_total_mcast_qp_attach;
-	int			max_ah;
-	int			max_fmr;
-	int			max_map_per_fmr;
-	int			max_srq;
-	int			max_srq_wr;
-	int			max_srq_sge;
-	uint16_t		max_pkeys;
-	uint8_t			local_ca_ack_delay;
-	uint8_t			phys_port_cnt;
+	fw_ver: array[0..63] of Char;
+	node_guid: __be64;
+	sys_image_guid: __be64;
+	max_mr_size: QWord;
+	page_size_cap: QWord;
+	vendor_id: DWord;
+	vendor_part_id: DWord;
+	hw_ver: DWord;
+	max_qp: integer;
+	max_qp_wr: integer;
+	device_cap_flags: DWord;
+	max_sge: integer;
+	max_sge_rd: integer;
+	max_cq: integer;
+	max_cqe: integer;
+	max_mr: integer;
+	max_pd: integer;
+	max_qp_rd_atom: integer;
+	max_ee_rd_atom: integer;
+	max_res_rd_atom: integer;
+	max_qp_init_rd_atom: integer;
+	max_ee_init_rd_atom: integer;
+	atomic_cap: enum ibv_atomic_cap;
+	max_ee: integer;
+	max_rdd: integer;
+	max_mw: integer;
+	max_raw_ipv6_qp: integer;
+	max_raw_ethy_qp: integer;
+	max_mcast_grp: integer;
+	max_mcast_qp_attach: integer;
+	max_total_mcast_qp_attach: integer;
+	max_ah: integer;
+	max_fmr: integer;
+	max_map_per_fmr: integer;
+	max_srq: integer;
+	max_srq_wr: integer;
+	max_srq_sge: integer;
+	max_pkeys: Word;
+	local_ca_ack_delay: Byte;
+	phys_port_cnt: Byte;
   end;
 
   ibv_pd = packed record
@@ -202,15 +204,15 @@ Type
   end;
 
   ibv_cq = packed record
-	ibv_context     *context;
-	ibv_comp_channel *channel;
-	void		       *cq_context;
-	uint32_t		handle;
-	int			cqe;
-	pthread_mutex_t		mutex;
-	pthread_cond_t		cond;
-	uint32_t		comp_events_completed;
-	uint32_t		async_events_completed;
+	context: ^ibv_context;
+	channel: ^ibv_comp_channel;
+	cq_context: Pointer;
+	handle: DWord;
+	cqe: integer;
+	mutex: pthread_mutex_t;
+	cond: pthread_cond_t;
+	comp_events_completed: DWord;
+	async_events_completed: DWord;
   end;
 
   ibv_port_state = (
@@ -231,26 +233,26 @@ Type
   );
   
   ibv_port_attr = packed record
-	enum ibv_port_state	state;
-	enum ibv_mtu		max_mtu;
-	enum ibv_mtu		active_mtu;
-	int			gid_tbl_len;
-	uint32_t		port_cap_flags;
-	uint32_t		max_msg_sz;
-	uint32_t		bad_pkey_cntr;
-	uint32_t		qkey_viol_cntr;
-	uint16_t		pkey_tbl_len;
-	uint16_t		lid;
-	uint16_t		sm_lid;
-	uint8_t			lmc;
-	uint8_t			max_vl_num;
-	uint8_t			sm_sl;
-	uint8_t			subnet_timeout;
-	uint8_t			init_type_reply;
-	uint8_t			active_width;
-	uint8_t			active_speed;
-	uint8_t			phys_state;
-	uint8_t			link_layer;
-	uint8_t			flags;
-	uint16_t		port_cap_flags2;
+	state: ibv_port_state;
+	max_mtu: enum ibv_mtu;
+	active_mtu: enum ibv_mtu;
+	gid_tbl_len: integer;
+	port_cap_flags: DWord;
+	max_msg_sz: DWord;
+	bad_pkey_cntr: DWord;
+	qkey_viol_cntr: DWord;
+	pkey_tbl_len: Word;
+	lid: Word;
+	sm_lid: Word;
+	lmc: Byte;
+	max_vl_num: Byte;
+	sm_sl: Byte;
+	subnet_timeout: Byte;
+	init_type_reply: Byte;
+	active_width: Byte;
+	active_speed: Byte;
+	phys_state: Byte;
+	link_layer: Byte;
+	flags: Byte;
+	port_cap_flags2: Word;
   end;
