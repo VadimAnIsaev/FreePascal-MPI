@@ -14,17 +14,28 @@ Type
   PMPI_Fint		= ^TMPI_Fint;
   
   PMPI_Comm		= ^TMPI_Comm;
+  MPI_Comm		= PMPI_Comm;
   PMPI_Op		= ^TMPI_Op;
+  MPI_Op		= PMPI_Op;
   PMPI_File		= ^TMPI_File;
+  MPI_File		= PMPI_File;
   PMPI_Win 		= ^TMPI_Win;
+  MPI_Win 		= PMPI_Win;
   PMPI_Group		= ^TMPI_Group;  
+  MPI_Group		= PMPI_Group;  
   PMPI_Info		= ^TMPI_Info;  
+  MPI_Info		= PMPI_Info;
   PMPI_Datatype		= ^TMPI_Datatype;
+  MPI_Datatype		= PMPI_Datatype;
   PMPI_Request		= ^TMPI_Request;
+  MPI_Request		= MPI_Request;
   PMPI_Status		= ^TMPI_Status;
+  MPI_Status		= PMPI_Status;
   PMPI_Errhandler	= ^TMPI_Errhandler;
+  MPI_Errhandler	= PMPI_Errhandler;
   PMPI_Message		= ^TMPI_Message;
-
+  MPI_Message		= PMPI_Message;
+  
   Pompi_communicator_t	= ^ompi_communicator_t;
   PPompi_communicator_t = ^Pompi_communicator_t;
   Pompi_win_t		= ^ompi_win_t;
