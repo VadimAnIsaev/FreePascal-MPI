@@ -20,6 +20,7 @@
 Type 
   
   TMPI_Aint       = longint;
+  MPI_Aint        = TMPI_Aint;
   PMPI_Aint       = ^TMPI_Aint;
   TMPI_Comm       = integer;
   PMPI_Comm       = ^TMPI_Comm;
