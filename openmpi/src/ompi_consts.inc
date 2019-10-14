@@ -1,5 +1,3 @@
-#define LIBRARYNAME   "OpenMPI"
-
 Const
   OPEN_MPI            = 1;
   
