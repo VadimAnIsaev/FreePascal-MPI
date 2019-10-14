@@ -17,6 +17,7 @@
  *********************************************}
 {$mode objfpc}{$h+}
 {$packrecords c}
+{$define OpenMPI}
 Unit mpi;
 
 interface
