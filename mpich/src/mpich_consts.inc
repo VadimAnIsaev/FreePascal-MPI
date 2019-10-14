@@ -15,9 +15,6 @@
  GNU General Public License for more details.
 
  *********************************************}
-
-#define LIBRARYNAME	"MPICH"
-
 Const
 
    NO_TAGS_WITH_MODIFIERS = 1;
