@@ -18,6 +18,7 @@
 
 {$mode objfpc}{$h+}
 {$packrecords c}
+{$define MPICH}
 unit mpi;
 
 interface
