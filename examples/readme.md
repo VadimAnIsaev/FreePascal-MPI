@@ -5,7 +5,7 @@ Compile this:
 
 Run this:    
 On Windows:     
-> mpiexec -np 4 hellow
+> mpiexec -np 4 hellow  
 > mpiexec -np 4 testpi
 
 On Unix (OpenMPI):    
