@@ -4,7 +4,7 @@ Compile this:
 > fpc testpi.pas    
 
 Run this:    
-On Windows:     
+On Windows (MSMPI):     
 > mpiexec -np 4 hellow  
 > mpiexec -np 4 testpi
 
