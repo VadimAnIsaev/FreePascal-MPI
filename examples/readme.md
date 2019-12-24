@@ -11,7 +11,7 @@ On Windows:
 On Unix (OpenMPI):    
 > mpirun --use-hwthread-cpus hellow    
 > mpirun --use-hwthread-cpus testpi    
-(MPICH) 
+(MPICH)   
 > mpirun -np 4 hellow    
 > mpirun -np 4 testpi    
 
