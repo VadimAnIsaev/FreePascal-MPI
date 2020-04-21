@@ -12,6 +12,10 @@ Changes:
 
 07.10.2019.
 - Insert "deprecated" for removed functions according to the standard MPI 3.1.
+
+21.04.2020
+- The function "MPI_Init ()" is unified with OpenMPI.
+
 ------------------------------
 ## OpenMPI
 Version 4.0.1.  
