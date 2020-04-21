@@ -146,7 +146,7 @@ function MPI_Error_string(errorcode: integer; str: PChar; resultlen: Pinteger): 
 function MPI_Error_class(errorcode: integer; errorclass: Pinteger): integer; cdecl; external LIBMPI name 'MPI_Error_class';
 function MPI_Wtime(): double; cdecl; external LIBMPI name 'MPI_Wtime';
 function MPI_Wtick(): double; cdecl; external LIBMPI name 'MPI_Wtick';
-function MPI_Init(argc: Pinteger; argv: PPChar): integer; cdecl; external LIBMPI name 'MPI_Init';
+function MPI_Init(argc: Pinteger=NIL; argv: PPChar=NIL): integer; cdecl; external LIBMPI name 'MPI_Init';
 function MPI_Finalize(): integer; cdecl; external LIBMPI name 'MPI_Finalize';
 function MPI_Initialized(flag: Pinteger): integer; cdecl; external LIBMPI name 'MPI_Initialized';
 function MPI_Abort(comm: TMPI_Comm; errorcode: integer): integer; cdecl; external LIBMPI name 'MPI_Abort';
