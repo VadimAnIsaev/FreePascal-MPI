@@ -1,3 +1,5 @@
+function MPI_Init_impl(argc: Pinteger = NIL; argv: PPchar = NIL): integer; cdecl; external LIBMPI name 'MPI_Init';
+
 procedure ConversionData();
 Begin
   // Communicators
@@ -36,9 +38,9 @@ Begin
   MPI_NO_OP	:= MPI_Op_f2c(MPI_NO_OP_F);
 End;
 
-function MPI_Init2(): integer;
+function MPI_Init(argc: Pinteger = NIL; argv: PPchar = NIL): integer;
 Begin
-  Result := MPI_Init(MPI_ARGC_NULL, MPI_ARGV_NULL);
+  Result := MPI_Init_impl(argc, argv);
   If Result = MPI_SUCCESS Then
   Begin
     // Conversion
