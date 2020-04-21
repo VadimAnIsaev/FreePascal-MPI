@@ -207,7 +207,7 @@ defined for every window }
 { Make the C names for the dup function mixed case.}
 { MPI 1 names }
    MPI_NULL_COPY_FN        = NIL deprecated 'MPI_NULL_COPY_FN was deprecated in MPI-2.0; use MPI_COMM_NULL_COPY_FN instead.';
-   MPI_NULL_DELETE_FN      = NIL deprecated 'MPI_NULL_DELETE_FN was deprecated in MPI-2.0; use MPI_COMM_NULL_DELETE_FN instead.';;
+   MPI_NULL_DELETE_FN      = NIL deprecated 'MPI_NULL_DELETE_FN was deprecated in MPI-2.0; use MPI_COMM_NULL_DELETE_FN instead.';
 
 { MPI 2 names }
    MPI_COMM_NULL_COPY_FN   = NIL;
