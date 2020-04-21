@@ -18,13 +18,9 @@ Var
 
 
 Begin
-{$IFDEF OpenMPI}    
-  MPI_Init2();
-{$ELSE}
-  MPI_Init(NIL, NIL);
-{$ENDIF}
+  MPI_Init();
 
-  MPI_Comm_size(MPI_COMM_WORLD, @numprocs);
+MPI_Comm_size(MPI_COMM_WORLD, @numprocs);
   MPI_Comm_rank(MPI_COMM_WORLD, @myid);
 //    MPI_Get_processor_name(@processor_name[1], @namelen);
 
