@@ -136,7 +136,7 @@ function MPI_Info_get_nkeys(info: PMPI_Info; nkeys: Pinteger): integer; cdecl; e
 function MPI_Info_get_nthkey(info: PMPI_Info; n: integer; key: Pchar): integer; cdecl; external LIBMPI name 'MPI_Info_get_nthkey';
 function MPI_Info_get_valuelen(info: PMPI_Info; const key: Pchar; valuelen: Pinteger; flag: Pinteger): integer; cdecl; external LIBMPI name 'MPI_Info_get_valuelen';
 function MPI_Info_set(info: PMPI_Info; const key: Pchar; const value: Pchar): integer; cdecl; external LIBMPI name 'MPI_Info_set';
-function MPI_Init(argc: Pinteger; argv: PPchar): integer; cdecl; external LIBMPI name 'MPI_Init';
+function MPI_Init(argc: Pinteger = NIL; argv: PPchar = NIL): integer;
 function MPI_Initialized(flag: Pinteger): integer; cdecl; external LIBMPI name 'MPI_Initialized';
 function MPI_Init_thread(argc: Pinteger; argv: PPchar; required: integer; provided: Pinteger): integer; cdecl; external LIBMPI name 'MPI_Init_thread';
 function MPI_Intercomm_create(local_comm: PMPI_Comm; local_leader: integer; bridge_comm: PMPI_Comm; remote_leader: integer; tag: integer; newintercomm: PMPI_Comm): integer; cdecl; external LIBMPI name 'MPI_Intercomm_create';
@@ -327,5 +327,4 @@ function MPI_Type_c2f(datatype: PMPI_Datatype): TMPI_FInt; cdecl; external LIBMP
 function MPI_Win_c2f(win: PMPI_Win): TMPI_FInt; cdecl; external LIBMPI name 'MPI_Win_c2f';
 
 // Init MPI for FreePascal
-function MPI_Init2(): integer;
 function MPI_Init2_thread(required: integer; provided: Pinteger): integer;
